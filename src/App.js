@@ -1,24 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
-// import ResponsiveAppBar from './sideBar';
-import SubjectInfo from './components/getSubjectInfo';
 import Footer from './components/footer';
 import QPInputPanel from './components/qpInputPanel';
 import ResponsiveAppBar from './components/navbar';
-// import 
-// import { ProSidebar } from 'react-pro-sidebar';
+import { DataProvider } from './components/dataProvider';
+import { useContext } from "react";
 
 function App() {
   return (
     <div className="App">
+      <DataProvider>
       <ResponsiveAppBar></ResponsiveAppBar>
       <div>
-        {/* <HamburgerMenuPage /> */}
       <QPInputPanel />
       </div>
       <div class="fixed-bottom">
       <Footer />
       </div>
+      </DataProvider>
       
     </div>
   );

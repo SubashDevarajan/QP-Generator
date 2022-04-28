@@ -41,8 +41,8 @@ const customStyles = {
     }),
   };
 
-const MyComponent = () => (
+const DropDown = () => (
   <Select options={options} styles={customStyles} />
 )
 
-export default MyComponent;
+export default DropDown;

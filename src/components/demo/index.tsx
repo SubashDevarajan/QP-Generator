@@ -75,7 +75,7 @@ function Demo() {
   ];
   return (
     <div className="container">
-      <h1>Bloom Taxonomy Standard</h1>
+      <h3>Bloom Taxonomy</h3>
       <ColorBar data={data} />
     </div>
   );
