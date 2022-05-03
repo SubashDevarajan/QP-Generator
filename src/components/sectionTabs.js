@@ -25,7 +25,7 @@ const SectionTab = () => {
     }
 
     return (
-        <div class="row d-flex justify-content-center container form-control">
+        <div class="row d-flex justify-content-center container form-control bg-opacity-75">
             {/* <button class=" btn btn-secondary" type="button">Reset</button> */}
             <Tabs style={{ height: 30, borderRadius: 0 }} indicatorColor="secondary" left>
                 <Tab onClick={() => handleClick("A")} label={

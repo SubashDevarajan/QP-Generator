@@ -38,7 +38,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const ResponsiveAppBar = () => {
-
+  // console.log("s");
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
@@ -70,8 +70,8 @@ const ResponsiveAppBar = () => {
             </li>
           </ul>
           <form class="d-flex">
-            <button class="btn btn-outline-primary me-3" type="submit">Preview</button>
-            <button class="btn btn-outline-success me-3" type="submit">Print</button>
+            <button class="btn btn-warning me-3" type="submit">Preview</button>
+            <button class="btn btn-success me-3" type="submit">Print</button>
             <StyledBadge
               overlap="circular"
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

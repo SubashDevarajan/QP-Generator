@@ -17,7 +17,7 @@ const QPButtonPanel = () => {
 
 
     return (
-        <div class = "row container h-50 p-4 form-control">
+        <div class = "row container p-4 form-control" style={{ height: 275 }}>
             {Object.keys(qpData[current["section"]]).map(function(ques,index){
                     return <button class={"me-2 mb-2 col-lg-5 btn btn-"+types[qpData[current["section"]][ques]["state"]]} id={"btn-"+current["section"]+"-"+index} onClick={handleClick} type="button">{ques}</button>;
                   })}

@@ -41,8 +41,18 @@ const customStyles = {
     }),
   };
 
-const DropDown = () => (
-  <Select options={options} styles={customStyles} />
-)
+// const ResponsiveAppBar = (props) => (
+//   console.log("s");
+//   return(
+//     <Select options={options} id={props.id} styles={customStyles} />
+//   );
+// );
+
+const DropDown = (props) => {
+  console.log(props.id);
+  return (
+    <Select options={options} id={props.id}  styles={customStyles} />
+  );
+};
 
 export default DropDown;
