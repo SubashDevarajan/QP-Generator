@@ -75,7 +75,7 @@ function Demo() {
   ];
   return (
     <div className="container">
-      <h3>Bloom Taxonomy</h3>
+      <h3 style={{textAlign:"center"}}>Bloom Taxonomy</h3>
       <ColorBar data={data} />
     </div>
   );

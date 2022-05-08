@@ -2,8 +2,9 @@ import React from 'react';
 import 'react-dropdown/style.css';
 import DropDown from './dropdown';
 import { DataStorage } from './dataProvider';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import Select from 'react-select';
+import axios from 'axios';
 
 const InputForm = () => {
 
@@ -24,6 +25,25 @@ const InputForm = () => {
         { value: 'silver', label: 'Silver' },
     ];
 
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        const a = axios
+            .get("http://localhost:5000/api/courseoutcome")
+            .then((res) => {
+                setData(res.data.rows);
+                // console.log(res.data.rows);
+            })
+            .catch((e) => console.log(e));
+    }, []);
+
+    var arr = [];
+
+    for(let i in data) {
+        arr.push({value : data[i]["keywords"],label : data[i]["keywords"]})
+    }
+
+    console.log(data);
+
     function handleCOChange(e) {
         console.log(e);
         // this.setState({ fruit: e.target.value });
@@ -40,6 +60,10 @@ const InputForm = () => {
         setCurrent({ ...current, questionIndex: nextIndex });
         // setCurrent({...current,["questionIndex"]: nextIndex });
         // console.log(current);
+    }
+
+    function checkVal() {
+        axios.get("localhost:5000/api/bldetails").then(res => { console.log(res) });
     }
 
     function handleSelectChange(v, e) {
@@ -115,12 +139,12 @@ const InputForm = () => {
                 <div class="col-lg-3">
                     <Select
                         name='blVerb'
-                        // isMulti
+                        isMulti
                         isSearchable
                         options={ColourOption}
                         onChange={handleSelectChange}
-                        value={ColourOption.filter(option =>
-                            option.value === qpData[current['section']][currentQuestion]["blVerb"])}
+                        // value={ColourOption.filter(option =>
+                        //     option.value === qpData[current['section']][currentQuestion]["blVerb"])}
                     />
                 </div>
             </div>
@@ -139,7 +163,7 @@ const InputForm = () => {
                     <button class="mx-4 btn btn-info" onClick={addBLVerb} type="submit">Add BL Verb</button>
                 </div>
                 <div class="col-lg-6 p-0 d-flex flex-row-reverse">
-                    <button class="mx-4 col-lg-3 btn btn-secondary" type="button">Reset</button>
+                    <button class="mx-4 col-lg-3 btn btn-secondary" onClick={checkVal} type="button">Reset</button>
                     <button class="mr-0 col-lg-3 btn btn-primary " onClick={handleNext} type="button">Next</button>
                 </div>
             </div>
