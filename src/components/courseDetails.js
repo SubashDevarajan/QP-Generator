@@ -2,11 +2,8 @@
 import Select from 'react-select';
 
 import * as React from 'react';
-import { TextField } from '@mui/material';
-
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import axios from 'axios';
+import { useState, useEffect, useContext } from 'react';
 
 const CourseDetails = () => {
 
@@ -31,6 +28,23 @@ const CourseDetails = () => {
   ];
   const regulations = [{ value: "2019", label: "2019" }];
   const [value, setValue] = React.useState(null);
+  const [course, setCourse] = useState([]);
+  useEffect(() => {
+    const a = axios
+      .get("http://localhost:5000/api/course")
+      .then((res) => {
+        setCourse(res.data.rows);
+        // console.log(res.data.rows);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  var CourseList = [];
+
+  for (let i in course) {
+    CourseList.push({ value: course[i]["coursecode"] + " - " + course[i]["coursename"], label: course[i]["coursecode"] + " - " + course[i]["coursename"] })
+  }
+
 
   return (
     // <form action="" method="post">
@@ -86,7 +100,7 @@ const CourseDetails = () => {
               name='courseOutcome'
               // isMulti
               isSearchable
-              options={departments}
+              options={CourseList}
             // onChange={handleSelectChange}
             // value={COList.filter(option =>
             //     option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}

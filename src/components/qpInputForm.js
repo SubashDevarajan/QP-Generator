@@ -11,13 +11,13 @@ const InputForm = () => {
     //     fruit: "banana",
     //   };
 
-    const [data, setData] = useState([]);
+    const [bl, setBl] = useState([]);
     const [co, setCo] = useState([]);
     useEffect(() => {
         const a = axios
             .get("http://localhost:5000/api/bldetails_all")
             .then((res) => {
-                setData(res.data.rows);
+                setBl(res.data.rows);
                 // console.log(res.data.rows);
             })
             .catch((e) => console.log(e));
@@ -38,26 +38,22 @@ const InputForm = () => {
     var bllevels = [];
 
 
-    for (let i in data) {
-        BLVerbList.push({ value: data[i]["keywords"], label: data[i]["keywords"] })
+    for (let i in bl) {
+        BLVerbList.push({ value: bl[i]["keywords"], label: bl[i]["keywords"] })
     }
 
     for (let i in co) {
         COList.push({ value: co[i]["courseoutcomes"], label: co[i]["courseoutcomes"] })
     }
 
-    console.log(COList);
-
-    for (let i in data) {
-        bllevels.push(data[i]["bl_levels"]);
+    for (let i in bl) {
+        bllevels.push(bl[i]["bl_levels"]);
     }
 
     bllevels = [...new Set(bllevels)];
     for (let i in bllevels) {
         BLLevelList.push({ value: bllevels[i], label: bllevels[i] })
     }
-
-    console.log(BLLevelList)
 
     const ColourOption = [
         { value: 'ocean', label: 'Ocean' },

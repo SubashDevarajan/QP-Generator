@@ -7,7 +7,7 @@ const Preview = () => {
 
   const coArray = ["CO1", "CO2", "CO3", "CO4", "CO5"];
 
-  console.log(qpData["A"])
+  // console.log(qpData["A"])
 
   return (
     <>
@@ -50,7 +50,6 @@ const Preview = () => {
         <tbody>
           {Object.keys(qpData["A"]).map(function (quesNum, index) {
             let curSection = qpData["A"]
-            console.log(curSection[quesNum]["question"]);
             return (
               <tr>
                 <td>{quesNum}</td>
