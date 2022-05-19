@@ -1,27 +1,55 @@
+import { Paper } from "@mui/material";
 import { useContext, useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
 import { DataStorage } from "./dataProvider";
 
 
 
 const QPButtonPanel = () => {
-    const [current,setCurrent,qpInfo,setQPInfo,qpData,setQPData] = useContext(DataStorage);
-    
-    const types = ["secondary","primary","success"];
+    const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData] = useContext(DataStorage);
 
-    function handleClick (e){
+    const types = ["secondary", "primary", "success"];
+
+    const useStyles = makeStyles({
+        root: {
+            flexGrow: 1,
+            paddingTop:17,
+            paddingBottom:17,
+            height:255
+
+        },
+        tab: {
+            fontSize: 12,
+            color: "#5f6368",
+            textTransform: "capitalize",
+            height: 10,
+            fontWeight: "600",
+            fontFamily: 'Google Sans,Roboto,Arial,sans-serif',
+
+        },
+        tabs: {
+            height: 10
+
+        }
+    });
+
+    
+  const classes = useStyles();
+
+    function handleClick(e) {
         // console.log(e.target.id.split("-").at(-2));
         const qn = parseInt(e.target.id.split("-").at(-1));
         console.log(qn);
-        setCurrent(prev => ({...current,questionIndex:qn}));
+        setCurrent(prev => ({ ...current, questionIndex: qn }));
     }
 
 
     return (
-        <div class = "row container p-4 form-control" style={{ height: 275 }}>
-            {Object.keys(qpData[current["section"]]).map(function(ques,index){
-                    return <button class={"me-2 mb-2 col-lg-5 btn btn-"+types[qpData[current["section"]][ques]["state"]]} id={"btn-"+current["section"]+"-"+index} onClick={handleClick} type="button">{ques}</button>;
-                  })}
-        </div>
+        <Paper className={classes.root}>
+            {Object.keys(qpData[current["section"]]).map(function (ques, index) {
+                return <button class={"me-2 mb-2 col-lg-5 btn btn-" + types[qpData[current["section"]][ques]["state"]]} id={"btn-" + current["section"] + "-" + index} onClick={handleClick} type="button">{ques}</button>;
+            })}
+        </Paper>
     )
 }
 

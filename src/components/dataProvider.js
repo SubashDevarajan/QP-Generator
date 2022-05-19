@@ -14,13 +14,18 @@ export const DataProvider = ({ children }) => {
     };
 
     const [qpInfo, setQPInfo] = useState({
+        university : "ANNA UNIVERSITY (UNIVERSITY DEPARTMENTS)",
+        description : "END SEMESTER EXAMINATIONS-NOV/DEC 2022",
         collegeName: "College Of Engineering, Guindy",
         subjectTitle: 'Numerical Methods',
+        time : "3",
         subjectCode: 'MA1234',
+        regulation : '2019',
+        department: "Mathematics",  
         date: '20/04/2022',
         marks: 100,
-        course: 'M.Sc Integrated',
-        sem: '8'
+        branch : 'M.Sc Integrated CS/IT',
+        semester: '8'
     })
 
     const [current,setCurrent] = useState({
@@ -33,8 +38,9 @@ export const DataProvider = ({ children }) => {
         blLevel: "",
         blVerb: "",
         courseOutcome: "",
+        marks: 2,
         question: "",
-        state: 0
+        state: 2
     };
 
     Object.keys(sectionQuestions).forEach(function (section, index) {

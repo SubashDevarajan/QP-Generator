@@ -1,6 +1,5 @@
 import React from 'react';
 import 'react-dropdown/style.css';
-import DropDown from './dropdown';
 import { DataStorage } from './dataProvider';
 import { useContext, useState, useEffect } from 'react';
 import Select from 'react-select';
@@ -11,6 +10,54 @@ const InputForm = () => {
     // this.state = {
     //     fruit: "banana",
     //   };
+
+    const [data, setData] = useState([]);
+    const [co, setCo] = useState([]);
+    useEffect(() => {
+        const a = axios
+            .get("http://localhost:5000/api/bldetails_all")
+            .then((res) => {
+                setData(res.data.rows);
+                // console.log(res.data.rows);
+            })
+            .catch((e) => console.log(e));
+    }, []);
+    useEffect(() => {
+        const a = axios
+            .get("http://localhost:5000/api/courseOutcome")
+            .then((res) => {
+                setCo(res.data.rows);
+                // console.log(res.data.rows);
+            })
+            .catch((e) => console.log(e));
+    }, []);
+
+    var BLVerbList = [];
+    var BLLevelList = [];
+    var COList = [];
+    var bllevels = [];
+
+
+    for (let i in data) {
+        BLVerbList.push({ value: data[i]["keywords"], label: data[i]["keywords"] })
+    }
+
+    for (let i in co) {
+        COList.push({ value: co[i]["courseoutcomes"], label: co[i]["courseoutcomes"] })
+    }
+
+    console.log(COList);
+
+    for (let i in data) {
+        bllevels.push(data[i]["bl_levels"]);
+    }
+
+    bllevels = [...new Set(bllevels)];
+    for (let i in bllevels) {
+        BLLevelList.push({ value: bllevels[i], label: bllevels[i] })
+    }
+
+    console.log(BLLevelList)
 
     const ColourOption = [
         { value: 'ocean', label: 'Ocean' },
@@ -25,45 +72,27 @@ const InputForm = () => {
         { value: 'silver', label: 'Silver' },
     ];
 
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        const a = axios
-            .get("http://localhost:5000/api/courseoutcome")
-            .then((res) => {
-                setData(res.data.rows);
-                // console.log(res.data.rows);
-            })
-            .catch((e) => console.log(e));
-    }, []);
-
-    var arr = [];
-
-    for(let i in data) {
-        arr.push({value : data[i]["keywords"],label : data[i]["keywords"]})
-    }
-
-    console.log(data);
-
     function handleCOChange(e) {
         console.log(e);
         // this.setState({ fruit: e.target.value });
     }
 
     const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
+    // console.log(current);
     const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
 
     function handleNext() {
         const questionNumbers = sectionQuestions[current["section"]];
         const currentIndex = current["questionIndex"];
         const nextIndex = (currentIndex + 1) % questionNumbers.length;
-        // console.log(current);
         setCurrent({ ...current, questionIndex: nextIndex });
-        // setCurrent({...current,["questionIndex"]: nextIndex });
-        // console.log(current);
     }
 
-    function checkVal() {
-        axios.get("localhost:5000/api/bldetails").then(res => { console.log(res) });
+    function handlePrev() {
+        const questionNumbers = sectionQuestions[current["section"]];
+        const currentIndex = current["questionIndex"];
+        const nextIndex = (currentIndex + questionNumbers.length - 1) % questionNumbers.length;
+        setCurrent({ ...current, questionIndex: nextIndex });
     }
 
     function handleSelectChange(v, e) {
@@ -77,7 +106,8 @@ const InputForm = () => {
                 }
             }
         });
-        console.log(e.name);
+        console.log(e.name,v.value);
+        console.log(qpData)
     }
 
     function handleQuestionChange(e) {
@@ -100,7 +130,7 @@ const InputForm = () => {
         if (curQuestionData == "")
             modifiedQuestion = curQuestionData + curQuestionBlverb.charAt(0).toUpperCase() + curQuestionBlverb.slice(1);
         else
-            modifiedQuestion = curQuestionData + " " + curQuestionBlverb;
+            modifiedQuestion = curQuestionData + " " + curQuestionBlverb.charAt(0).toLowerCase() + curQuestionBlverb.slice(1);
 
         setQPData({
             ...qpData,
@@ -123,9 +153,9 @@ const InputForm = () => {
                         name='courseOutcome'
                         // isMulti
                         isSearchable
-                        options={ColourOption}
+                        options={COList}
                         onChange={handleSelectChange}
-                        value={ColourOption.filter(option =>
+                        value={COList.filter(option =>
                             option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}
                     />
                 </div>
@@ -133,18 +163,25 @@ const InputForm = () => {
             <div class="row mb-3">
                 <h5 class="col-lg-3 p-1">Bloom Taxonomy Level </h5>
                 <div class="col-lg-3">
-                    <Select />
+                    <Select
+                        name='blLevel'
+                        isSearchable
+                        options={BLLevelList}
+                        onChange={handleSelectChange}
+                        value={BLLevelList.filter(option =>
+                            option.value === qpData[current['section']][currentQuestion]["bllevel"])}
+                    />
                 </div>
                 <h5 class="col-lg-3 p-1">Bloom Taxonomy Verb </h5>
                 <div class="col-lg-3">
                     <Select
                         name='blVerb'
-                        isMulti
+                        // isMulti
                         isSearchable
-                        options={ColourOption}
+                        options={BLVerbList}
                         onChange={handleSelectChange}
-                        // value={ColourOption.filter(option =>
-                        //     option.value === qpData[current['section']][currentQuestion]["blVerb"])}
+                        value={BLVerbList.filter(option =>
+                            option.value === qpData[current['section']][currentQuestion]["blVerb"])}
                     />
                 </div>
             </div>
@@ -163,8 +200,9 @@ const InputForm = () => {
                     <button class="mx-4 btn btn-info" onClick={addBLVerb} type="submit">Add BL Verb</button>
                 </div>
                 <div class="col-lg-6 p-0 d-flex flex-row-reverse">
-                    <button class="mx-4 col-lg-3 btn btn-secondary" onClick={checkVal} type="button">Reset</button>
-                    <button class="mr-0 col-lg-3 btn btn-primary " onClick={handleNext} type="button">Next</button>
+                    <button class="mx-4 col-lg-3 btn btn-primary " onClick={handleNext} type="button">Next</button>
+                    <button class="mr-0 col-lg-3 btn btn-primary " onClick={handlePrev} type="button">Prev</button>
+                    <button class="mx-4 col-lg-3 btn btn-secondary" type="button">Reset</button>
                 </div>
             </div>
         </div>

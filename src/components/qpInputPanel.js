@@ -3,10 +3,57 @@ import InputForm from "./qpInputForm";
 import QPButtonPanel from "./questionButtonsPanel";
 import { DataStorage } from "./dataProvider";
 import { useContext } from "react";
+import * as React from 'react';
+import { Box, Typography, Modal, Paper } from "@mui/material";
 import Demo from "./demo";
+
+import { makeStyles } from '@material-ui/core/styles';
 import Preview from "./Preview";
 
 const QPInputPanel = () => {
+  const [openBl, setOpenBl] = React.useState(false);
+  const handleOpenBl = () => setOpenBl(true);
+  const handleCloseBl = () => setOpenBl(false);
+
+  const useStyles = makeStyles({
+    root: {
+      flexGrow: 1,
+      marginTop: 17,
+      paddingTop: 15,
+      paddingBottom: 12,
+      height: 230
+
+    },
+    tab: {
+      fontSize: 12,
+      color: "#5f6368",
+      textTransform: "capitalize",
+      height: 10,
+      fontWeight: "600",
+      fontFamily: 'Google Sans,Roboto,Arial,sans-serif',
+
+    },
+    tabs: {
+      height: 10
+
+    }
+  });
+
+
+  const classes = useStyles();
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
   const [
     current,
     setCurrent,
@@ -33,14 +80,14 @@ const QPInputPanel = () => {
           <SectionTab />
         </div>
         <QPButtonPanel />
-        <div class="row mt-3 form-control p-3" style={{ height: 215 }}>
+        <Paper className={classes.root}>
           <h3>Comparison Graph</h3>
           <div
             class="btn-group mt-2 mb-3"
             role="group"
             aria-label="Basic example"
           >
-            <button type="button" class="btn btn-primary">
+            <button type="button" onClick={handleOpenBl} class="btn btn-primary">
               BL Level
             </button>
             <button type="button" class="btn btn-secondary">
@@ -61,7 +108,7 @@ const QPInputPanel = () => {
               Print
             </button>
           </div>
-        </div>
+        </Paper>
       </div>
 
       <div
@@ -92,6 +139,7 @@ const QPInputPanel = () => {
             </div>
             <div class="modal-body">
               <Preview />
+              {/* <p> haha </p> */}
             </div>
             <div class="modal-footer">
               <button
@@ -105,6 +153,36 @@ const QPInputPanel = () => {
           </div>
         </div>
       </div>
+      <Modal
+        open={openBl}
+        onClose={handleCloseBl}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div class="mb-5">
+            <Demo />
+
+          </div>
+          <div class="mb-3">
+            <Demo />
+
+          </div>
+        </Box>
+      </Modal>
+      <Modal
+        // open={openPrev}
+        // onClose={handleClosePrev}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div class="mb-5">
+            <Preview />
+
+          </div>
+        </Box>
+      </Modal>
     </div>
   );
 };

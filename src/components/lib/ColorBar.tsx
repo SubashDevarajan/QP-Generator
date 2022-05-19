@@ -170,12 +170,12 @@ const ColorBar = ({
 
   return (
     <div style={rootStyle}>
-      {/* <div style={({ ...defaultStyles.colorBarSectionsContainer, ...barContainerStyle })}>
+      <div style={({ ...defaultStyles.colorBarSectionsContainer, ...barContainerStyle })}>
         {colorBarSections}
-      </div> */}
-      {/* <div style={({ ...defaultStyles.legendContainer, ...legendContainerStyle })}>
+      </div>
+      <div style={({ ...defaultStyles.legendContainer, ...legendContainerStyle })}>
         {legendRows}
-      </div> */}
+      </div>
     </div>
   );
 };
