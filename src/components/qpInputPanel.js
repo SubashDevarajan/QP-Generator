@@ -9,6 +9,8 @@ import Demo from "./demo";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Preview from "./Preview";
+import Progress from "./progressBar";
+import Print from "./Print";
 
 const QPInputPanel = () => {
   const [openBl, setOpenBl] = React.useState(false);
@@ -43,15 +45,15 @@ const QPInputPanel = () => {
   const classes = useStyles();
 
   const style = {
-    position: 'absolute',
+    // position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
+    // // width: 400,
+    // bgcolor: 'background.paper',
+    // border: '2px solid #000',
+    // boxShadow: 24,
+    // p: 4,
   };
 
   const [
@@ -87,7 +89,12 @@ const QPInputPanel = () => {
             role="group"
             aria-label="Basic example"
           >
-            <button type="button" onClick={handleOpenBl} class="btn btn-primary">
+            <button
+              type="submit"
+              data-toggle="modal"
+              data-target="#BLLevelProgress"
+              class="btn btn-primary"
+            >
               BL Level
             </button>
             <button type="button" class="btn btn-secondary">
@@ -104,11 +111,54 @@ const QPInputPanel = () => {
             >
               Preview
             </button>
-            <button class="btn btn-success mx-3" type="submit">
+            {/* <button class="btn btn-success mx-3" type="submit">
               Print
-            </button>
+            </button> */}
+            <Print />
           </div>
         </Paper>
+      </div>
+
+      <div
+        class="modal fade bd-example-modal-lg"
+        id="BLLevelProgress"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="BLLevelProgressTitle"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-lg modal-dialog-centered"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="BLLevelProgressTitle">
+                Bloom Taxonomy Standard
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <Progress />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div
@@ -139,7 +189,6 @@ const QPInputPanel = () => {
             </div>
             <div class="modal-body">
               <Preview />
-              {/* <p> haha </p> */}
             </div>
             <div class="modal-footer">
               <button
@@ -153,6 +202,8 @@ const QPInputPanel = () => {
           </div>
         </div>
       </div>
+
+
       <Modal
         open={openBl}
         onClose={handleCloseBl}
@@ -161,13 +212,14 @@ const QPInputPanel = () => {
       >
         <Box sx={style}>
           <div class="mb-5">
-            <Demo />
+            {/* <Demo isHeader={true} header={"Bloom Taxonomy Standard"} /> */}
+            <Progress />
 
           </div>
-          <div class="mb-3">
-            <Demo />
+          {/* <div class="mt-5">
+            <Demo isHeader={true} header={"Current Bloom Taxonomy Allocation"} />
 
-          </div>
+          </div> */}
         </Box>
       </Modal>
       <Modal

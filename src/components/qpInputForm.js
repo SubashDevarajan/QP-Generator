@@ -11,6 +11,8 @@ const InputForm = () => {
     //     fruit: "banana",
     //   };
 
+
+
     const [bl, setBl] = useState([]);
     const [co, setCo] = useState([]);
     useEffect(() => {
@@ -23,14 +25,19 @@ const InputForm = () => {
             .catch((e) => console.log(e));
     }, []);
     useEffect(() => {
+        let data = { coursecode: "XC7851" };
         const a = axios
-            .get("http://localhost:5000/api/courseOutcome")
+            .get("http://localhost:5000/api/courseoutcome")
             .then((res) => {
                 setCo(res.data.rows);
                 // console.log(res.data.rows);
             })
             .catch((e) => console.log(e));
     }, []);
+
+
+    // console.log(co)
+
 
     var BLVerbList = [];
     var BLLevelList = [];
@@ -40,42 +47,25 @@ const InputForm = () => {
 
     for (let i in bl) {
         BLVerbList.push({ value: bl[i]["keywords"], label: bl[i]["keywords"] })
-    }
-
-    for (let i in co) {
-        COList.push({ value: co[i]["courseoutcomes"], label: co[i]["courseoutcomes"] })
-    }
-
-    for (let i in bl) {
         bllevels.push(bl[i]["bl_levels"]);
     }
 
     bllevels = [...new Set(bllevels)];
+    var v = 0;
+
     for (let i in bllevels) {
-        BLLevelList.push({ value: bllevels[i], label: bllevels[i] })
+        v = parseInt(i) + 1
+        BLLevelList.push({ value: "BL" + v, label: bllevels[i] })
     }
 
-    const ColourOption = [
-        { value: 'ocean', label: 'Ocean' },
-        { value: 'blue', label: 'Blue' },
-        { value: 'purple', label: 'Purple' },
-        { value: 'red', label: 'Red' },
-        { value: 'orange', label: 'Orange' },
-        { value: 'yellow', label: 'Yellow' },
-        { value: 'green', label: 'Green' },
-        { value: 'forest', label: 'Forest' },
-        { value: 'slate', label: 'Slate' },
-        { value: 'silver', label: 'Silver' },
-    ];
-
-    function handleCOChange(e) {
-        console.log(e);
-        // this.setState({ fruit: e.target.value });
+    for (let i in co) {
+        COList.push({ value: co[i]["levels"], label: co[i]["courseoutcomes"] })
     }
 
     const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
-    // console.log(current);
+    const [sds, setCurrenssdt, qpInfso, setQPInfdo, qpDataa, setQPDataa, sectionQuestionss] = useContext(DataStorage);
     const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
+    const [state, setState] = useState();
 
     function handleNext() {
         const questionNumbers = sectionQuestions[current["section"]];
@@ -92,28 +82,102 @@ const InputForm = () => {
     }
 
     function handleSelectChange(v, e) {
+
+        var curQues = qpData[current["section"]][currentQuestion];
+        var arr = ["blLevel", "blVerb", "courseOutcome", "question"]
+        var state = 2;
+        for (let j in arr) {
+            if (curQues[arr[j]] == "") {
+                if (arr[j] != e.name) {
+                    state = 1;
+                    break;
+                }
+            }
+        }
+
         setQPData({
             ...qpData,
             [current["section"]]: {
                 ...qpData[current["section"]],
                 [currentQuestion]: {
                     ...qpData[current["section"]][currentQuestion],
-                    [e.name]: v.value
+                    [e.name]: v.value,
+                    state: state
                 }
             }
         });
-        console.log(e.name,v.value);
-        console.log(qpData)
+        // setQPData({
+        //     ...qpData,
+        //     [current["section"]]: {
+        //         ...qpData[current["section"]],
+        //         [currentQuestion]: {
+        //             ...qpData[current["section"]][currentQuestion],
+        //             state: 1
+        //         }
+        //     }
+        // });
+        // var state = 0;
+        // console.log(curQues)
     }
 
+
+    useEffect(() => {
+        // setQPDataa({
+        //     ...qpDataa,
+        //     [current["section"]]: {
+        //         ...qpDataa[current["section"]],
+        //         [currentQuestion]: {
+        //             ...qpDataa[current["section"]][currentQuestion],
+        //             state: 1
+        //         }
+        //     }
+        // });
+    }, [qpData]);
+
+    function handleReset() {
+        // var curQues = qpData[current["section"]][currentQuestion];
+        // for (let j in curQues) {
+        //     var v = ""
+        //     if(j == "state")
+        //     v = "1"
+        //     console.log(j,v)
+        //     setQPData({
+        //         ...qpData,
+        //         [current["section"]]: {
+        //             ...qpData[current["section"]],
+        //             [currentQuestion]: {
+        //                 ...qpData[current["section"]][currentQuestion],
+        //                 j : v
+        //             }
+        //         }
+        //     });
+        // }
+        // console.log(qpData);
+    }
+
+
     function handleQuestionChange(e) {
+
+        var curQues = qpData[current["section"]][currentQuestion];
+        var arr = ["blLevel", "blVerb", "courseOutcome", "question"]
+        var state = 2;
+        for (let j in arr) {
+            if (curQues[arr[j]] == "") {
+                if (arr[j] != e.target.name) {
+                    state = 1;
+                    break;
+                }
+            }
+        }
+
         setQPData({
             ...qpData,
             [current["section"]]: {
                 ...qpData[current["section"]],
                 [currentQuestion]: {
                     ...qpData[current["section"]][currentQuestion],
-                    question: e.target.value
+                    question: e.target.value,
+                    state: state
                 }
             }
         });
@@ -140,6 +204,7 @@ const InputForm = () => {
         });
     }
 
+
     return (
         <div class="container form form-control row">
             <div class="row my-3">
@@ -165,7 +230,7 @@ const InputForm = () => {
                         options={BLLevelList}
                         onChange={handleSelectChange}
                         value={BLLevelList.filter(option =>
-                            option.value === qpData[current['section']][currentQuestion]["bllevel"])}
+                            option.value === qpData[current['section']][currentQuestion]["blLevel"])}
                     />
                 </div>
                 <h5 class="col-lg-3 p-1">Bloom Taxonomy Verb </h5>
@@ -185,6 +250,7 @@ const InputForm = () => {
             <div class="row mb-3">
                 <h5 class="p-1 mx-2 col-lg-3" align="left">Question <span>{currentQuestion}</span> : </h5>
                 <textarea
+                    name='question'
                     style={{ resize: "none", height: 300 }}
                     type="text" onChange={handleQuestionChange}
                     class="m-2 mx-3 form-control"
@@ -198,7 +264,7 @@ const InputForm = () => {
                 <div class="col-lg-6 p-0 d-flex flex-row-reverse">
                     <button class="mx-4 col-lg-3 btn btn-primary " onClick={handleNext} type="button">Next</button>
                     <button class="mr-0 col-lg-3 btn btn-primary " onClick={handlePrev} type="button">Prev</button>
-                    <button class="mx-4 col-lg-3 btn btn-secondary" type="button">Reset</button>
+                    <button class="mx-4 col-lg-3 btn btn-secondary" onClick={handleReset} type="button">Reset</button>
                 </div>
             </div>
         </div>

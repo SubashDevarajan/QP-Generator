@@ -12,6 +12,7 @@ import SignUp from "./login/signup.component";
 import Main from "./login/Main";
 import QPMain from "./components/Main";
 import Dashboard from "./dashboard/Dashboard";
+import Progress from "./components/progressBar";
 
 function App() {
   const token = localStorage.getItem("AuthId");
@@ -19,6 +20,7 @@ function App() {
 
   return (
     <>
+    {/* <Progress /> */}
       <Router>
         <div className="App">
           <Routes>

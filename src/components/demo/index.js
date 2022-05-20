@@ -4,8 +4,8 @@ import { FaApple } from 'react-icons/fa';
 import ColorBar, { Data } from '../lib/ColorBar';
 import './style.css';
 
-function Demo() {
-  const data: Data[] = [
+function Demo(props) {
+  const Data = [
     {
       value: 300,
       color: '#21bbce',
@@ -21,8 +21,8 @@ function Demo() {
         label: 'Comprehension',
         icon: <FaApple />,
       },
-    }, 
-    
+    },
+
     {
       value: 200,
       color: '#4bc97d',
@@ -44,8 +44,8 @@ function Demo() {
           },
         },
       },
-    }, 
-    
+    },
+
     {
       value: 100,
       color: '#eb5be1',
@@ -61,7 +61,7 @@ function Demo() {
         label: 'Application',
       },
     },
-     {
+    {
       value: 300,
       color: 'red',
       tooltip: {
@@ -75,8 +75,12 @@ function Demo() {
   ];
   return (
     <div className="container">
-      <h3 style={{textAlign:"center"}}>Bloom Taxonomy</h3>
-      <ColorBar data={data} />
+      <div class="mb-4">
+        {props.isHeader && <h3 style={{ textAlign: "center" }}>{props.header}</h3>}
+      </div>
+      <div class="my-3">
+        <ColorBar data={Data} />
+      </div>
     </div>
   );
 }
