@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../index.css";
+import "./login.css";
 
 const Login = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
   });
+  
 
   const [error, setError] = useState(false);
   const [errormsg, seterrormsg] = useState("");
@@ -32,7 +33,11 @@ const Login = () => {
   };
 
   return (
+    <>
+    <div className="App">
+      
     <div className="auth-wrapper body">
+      
       <div className="auth-inner">
         <form onSubmit={(e) => e.preventDefault()}>
           <h3>Sign In</h3>
@@ -87,6 +92,8 @@ const Login = () => {
         </form>
       </div>
     </div>
+    </div>
+    </>
   );
 };
 export default Login;
