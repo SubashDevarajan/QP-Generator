@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Footer from "./footer";
 import QPInputPanel from "./qpInputPanel";
 import ResponsiveAppBar from "./navbar";
@@ -6,6 +7,13 @@ import background from "../images/bg-question.webp";
 // import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 function Main() {
+  useEffect(() => {
+    const token = localStorage.getItem("AuthId");
+    console.log(token);
+    if (token == null) {
+      window.location.href = "/";
+    }
+  });
   return (
     <>
       <div
