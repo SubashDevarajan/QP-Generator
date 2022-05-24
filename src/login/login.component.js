@@ -7,7 +7,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-  
 
   const [error, setError] = useState(false);
   const [errormsg, seterrormsg] = useState("");
@@ -20,6 +19,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         localStorage.setItem("AuthId", res.data.accesstoken.accessToken);
+        localStorage.setItem("RefId", res.data.accesstoken.refreshToken);
         localStorage.setItem("UserId", res.data.userid);
         window.location.href = "/main";
       })
@@ -34,65 +34,65 @@ const Login = () => {
 
   return (
     <>
-    <div className="App">
-      
-    <div className="auth-wrapper body">
-      
-      <div className="auth-inner">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <h3>Sign In</h3>
+      <div className="App">
+        <div className="auth-wrapper body">
+          <div className="auth-inner">
+            <form onSubmit={(e) => e.preventDefault()}>
+              <h3>Sign In</h3>
 
-          <div className="mb-3">
-            <label>Email address</label>
-            <input
-              type="email"
-              id="email"
-              className="form-control"
-              placeholder="Enter email"
-              onChange={(e) => setData({ ...data, email: e.target.value })}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label>Password</label>
-            <input
-              type="password"
-              id="password"
-              className="form-control"
-              placeholder="Enter password"
-              onChange={(e) => setData({ ...data, password: e.target.value })}
-            />
-          </div>
-
-          {error && (
-            <div className="mb-3">
-              <div>
-                <label
-                  style={{ color: "red" }}
-                  className="custom-control-label"
-                >
-                  {errormsg}
-                </label>
+              <div className="mb-3">
+                <label>Email address</label>
+                <input
+                  type="email"
+                  id="email"
+                  className="form-control"
+                  placeholder="Enter email"
+                  onChange={(e) => setData({ ...data, email: e.target.value })}
+                />
               </div>
-            </div>
-          )}
 
-          <div className="d-grid">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              onClick={() => submit()}
-            >
-              Submit
-            </button>
+              <div className="mb-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  className="form-control"
+                  placeholder="Enter password"
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }
+                />
+              </div>
+
+              {error && (
+                <div className="mb-3">
+                  <div>
+                    <label
+                      style={{ color: "red" }}
+                      className="custom-control-label"
+                    >
+                      {errormsg}
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              <div className="d-grid">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={() => submit()}
+                >
+                  Submit
+                </button>
+              </div>
+              <p className="forgot-password text-right">
+                <a href="/sign-up">No Account?</a>
+              </p>
+            </form>
           </div>
-          <p className="forgot-password text-right">
-            <a href="/sign-up">No Account?</a>
-          </p>
-        </form>
+        </div>
       </div>
-    </div>
-    </div>
     </>
   );
 };

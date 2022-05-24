@@ -13,12 +13,35 @@ import Main from "./login/Main";
 import QPMain from "./components/Main";
 import Dashboard from "./dashboard/Dashboard";
 import Progress from "./components/progressBar";
+import axios from "axios";
+import { useEffect } from "react";
 import Admin from "./admin/admin";
-import MyEditor from "./components/RichText"
+import MyEditor from "./components/RichText";
 
 function App() {
   const token = localStorage.getItem("AuthId");
+  const refId = localStorage.getItem("RefId");
   const role = localStorage.getItem("UserId");
+
+  const refresh = async () => {
+    const a = await axios
+      .get("http://localhost:5000/api/auth/refresh_token", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("RefId")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("AuthId", res.data.accessToken);
+        // setItemOnLocalStorage('RefId', res.data.refreshToken);
+        // setItemOnLocalStorage('Role', res.data.user.role);
+        console.log(localStorage.getItem("AuthId"));
+      });
+  };
+
+  useEffect(() => {
+    setInterval(refresh, 10 * 1000);
+  }, []);
 
   return (
     <>
