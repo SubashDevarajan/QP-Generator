@@ -8,6 +8,11 @@ import { DataStorage } from './dataProvider';
 
 const CourseDetails = () => {
 
+  var curr = new Date();
+  curr.setDate(curr.getDate() + 3);
+  var date = curr.toISOString().substr(0, 10);
+  console.log(date);
+
   const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
   const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
 
@@ -72,8 +77,8 @@ const CourseDetails = () => {
               isSearchable
               options={campus}
               onChange={handleSelectChange}
-            // value={COList.filter(option =>
-            //     option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}
+              value={campus.filter(option =>
+                option.value === qpInfo["campus"])}
             />
           </div>
         </div>
@@ -86,8 +91,8 @@ const CourseDetails = () => {
               isSearchable
               options={departments}
               onChange={handleSelectChange}
-            // value={COList.filter(option =>
-            //     option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}
+              value={departments.filter(option =>
+                option.value === qpInfo["department"])}
             />
           </div>
         </div>
@@ -99,9 +104,9 @@ const CourseDetails = () => {
               // isMulti
               isSearchable
               options={branches}
-            onChange={handleSelectChange}
-            // value={COList.filter(option =>
-            //     option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}
+              onChange={handleSelectChange}
+              value={branches.filter(option =>
+                option.value === qpInfo["branch"])}
             />
           </div>
         </div>
@@ -113,9 +118,9 @@ const CourseDetails = () => {
               // isMulti
               isSearchable
               options={CourseList}
-            onChange={handleSelectChange}
-            // value={COList.filter(option =>
-            //     option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}
+              onChange={handleSelectChange}
+              value={CourseList.filter(option =>
+                option.value === qpInfo["subjectCodeTitle"])}
             />
           </div>
         </div>
@@ -127,9 +132,9 @@ const CourseDetails = () => {
               // isMulti
               isSearchable
               options={semester}
-            onChange={handleSelectChange}
-            // value={COList.filter(option =>
-            //     option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}
+              onChange={handleSelectChange}
+              value={semester.filter(option =>
+                option.value === qpInfo["semester"])}
             />
           </div>
         </div>
@@ -141,13 +146,13 @@ const CourseDetails = () => {
               // isMulti
               isSearchable
               options={regulations}
-            onChange={handleSelectChange}
-            // value={COList.filter(option =>
-            //     option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}
+              onChange={handleSelectChange}
+              value={regulations.filter(option =>
+                option.value === qpInfo["regulation"])}
             />
           </div>
         </div>
-        <div class="row my-3">
+        {/* <div class="row my-3">
           <h5 class="col-lg-3 p-1">Date</h5>
           <div class="col-lg-9 h-50">
             <input
@@ -155,9 +160,10 @@ const CourseDetails = () => {
               onChange={handleChange}
               class="leading-none text-gray-900 p-1 focus:outline-none focus:border-blue-700 bg-gray-100 border rounded border-gray-200"
               placeholder="Select Date"
+              value={date}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )

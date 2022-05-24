@@ -13,6 +13,8 @@ import Main from "./login/Main";
 import QPMain from "./components/Main";
 import Dashboard from "./dashboard/Dashboard";
 import Progress from "./components/progressBar";
+import Admin from "./admin/admin";
+import MyEditor from "./components/RichText"
 
 function App() {
   const token = localStorage.getItem("AuthId");
@@ -20,7 +22,8 @@ function App() {
 
   return (
     <>
-    {/* <Progress /> */}
+      {/* <Progress /> */}
+      {/* <MyEditor /> */}
       <Router>
         <div className="App">
           <Routes>
@@ -29,7 +32,7 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             {role === "1" ? (
               <>
-                <Route path="/main" element={<Main />} />
+                <Route path="/main" element={<Admin />} />
               </>
             ) : (
               <>

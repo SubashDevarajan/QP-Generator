@@ -34,26 +34,28 @@ const Progress = () => {
     }
 
     var currentBlValues = {
-        lower: (currentBlMarks["BL1"]||0) + (currentBlMarks["BL2"]||0),
-        intermediate: (currentBlMarks["BL3"]||0) + (currentBlMarks["BL4"]||0),
-        higher: (currentBlMarks["BL5"]||0) + (currentBlMarks["BL6"]||0)
+        lower: (currentBlMarks["BL1"] || 0) + (currentBlMarks["BL2"] || 0),
+        intermediate: (currentBlMarks["BL3"] || 0) + (currentBlMarks["BL4"] || 0),
+        higher: (currentBlMarks["BL5"] || 0) + (currentBlMarks["BL6"] || 0)
     }
 
     console.log(currentBlValues)
 
     var colorValues = {
         lower: "danger",
-        intermediate: (currentBlMarks["BL3"]||0) + (currentBlMarks["BL4"]||0),
-        higher: (currentBlMarks["BL5"]||0) + (currentBlMarks["BL6"]||0)
+        intermediate: "danger",
+        higher: "danger"
     }
 
-    if(blStandards["lower"][0]<=currentBlValues["lower"] && blStandards["lower"][1]>=currentBlValues["lower"])
-    {
-        colorValues["lower"] = "success"
-    }
-    else{
-        if(Math.min(Math.abs(blStandards["lower"][0]-currentBlValues["lower"]) , Math.abs(blStandards["lower"][1]-currentBlValues["lower"]))<=10)
-        colorValues['lower'] = "warning"
+    var orderArray = ["lower", "intermediate", "higher"]
+    for (let i in orderArray) {
+        if (blStandards[orderArray[i]][0] <= currentBlValues[orderArray[i]] && blStandards[orderArray[i]][1] >= currentBlValues[orderArray[i]]) {
+            colorValues[orderArray[i]] = "success"
+        }
+        else {
+            if (Math.min(Math.abs(blStandards[orderArray[i]][0] - currentBlValues[orderArray[i]]), Math.abs(blStandards[orderArray[i]][1] - currentBlValues[orderArray[i]])) <= 10)
+                colorValues[orderArray[i]] = "warning"
+        }
     }
     const colorCodes = { 0: "danger", 1: "warning" }
 
@@ -61,34 +63,51 @@ const Progress = () => {
     return (
         <div>
             <div class="row my-2">
-                <div class="col-lg-4 my-auto">
+                <div class="col-lg-5 my-auto">
                     <h5>{'Lower Order (L1 and L2)'}</h5>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-7">
+                    <ProgressBar>
+                        <ProgressBar variant="info" now={20} key={1} />
+                        <ProgressBar variant="success" now={15} key={2} />
+                        <ProgressBar variant="info" now={65} key={3} />
+                    </ProgressBar>
                     <ProgressBar className='my-1' variant={colorValues["lower"]} now={currentBlValues["lower"]} />
+
                 </div>
             </div>
             <div class="row my-2">
-                <div class="col-lg-4">
-                    <h5>Intermediate Order</h5>
+                <div class="col-lg-5">
+                    <h5>{'Intermediate Order (L3 and L4)'}</h5>
                 </div>
-                <div class="col-lg-8">
-                    <ProgressBar className='my-1' variant="success" now={currentBlValues["intermediate"]} />
-                </div>
-            </div>
-            <div class="row my-2">
-                <div class="col-lg-4">
-                    <h5>Higher Order</h5>
-                </div>
-                <div class="col-lg-8">
-                    <ProgressBar className='my-1' variant="success" now={currentBlValues["higher"]} />
+                <div class="col-lg-7">
+                    <ProgressBar>
+                        <ProgressBar variant="info" now={40} key={1} />
+                        <ProgressBar variant="success" now={60} key={2} />
+                        {/* <ProgressBar variant="info" now={65} key={3} /> */}
+                    </ProgressBar>
+                    <ProgressBar className='my-1' variant={colorValues["intermediate"]} now={currentBlValues["intermediate"]} />
                 </div>
             </div>
             <div class="row my-2">
-                <div class="col-lg-4">
-                    <h5>Unallocated</h5>
+                <div class="col-lg-5">
+                    <h5>{'Higher Order (L5 and L6)'}</h5>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-7">
+                    <ProgressBar>
+                        <ProgressBar variant="info" now={15} key={1} />
+                        <ProgressBar variant="success" now={10} key={2} />
+                        <ProgressBar variant="info" now={75} key={3} />
+                    </ProgressBar>
+                    <ProgressBar className='my-1' variant={colorValues["higher"]} now={currentBlValues["higher"]} />
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-lg-5">
+                    <h5>Unallocated Marks</h5>
+                </div>
+                <div class="col-lg-7">
+                    <h5>{currentBlMarks[""] - 65}</h5>
                     {/* <ProgressBar className='my-1' variant="success" now={currentBlValues[""]} /> */}
                 </div>
             </div>

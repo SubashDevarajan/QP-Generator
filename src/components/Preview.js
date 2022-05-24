@@ -1,13 +1,35 @@
 import React from "react";
 import "./styles/previewStyle.css";
 import { DataStorage } from './dataProvider';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import axios from 'axios';
+import { Collapse } from "@mui/material";
+
 const Preview = () => {
   const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
 
   const coArray = ["CO1", "CO2", "CO3", "CO4", "CO5"];
+  const [co, setCo] = useState([]);
 
-  // console.log(qpData["A"])
+
+  useEffect(() => {
+    let data = { coursecode: "XC7851" };
+    const a = axios
+      .get("http://localhost:5000/api/courseoutcome")
+      .then((res) => {
+        setCo(res.data.rows);
+        // console.log(res.data.rows);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  var COList = [];
+
+  for (let i in co) {
+    COList.push({ value: co[i]["levels"], label: co[i]["courseoutcomes"] })
+  }
+
+  // console.log(COList)
 
   return (
     <>
@@ -23,13 +45,21 @@ const Preview = () => {
       <div style={{ clear: "both" }}></div>
       <table id="fetch" style={{ width: "70%" }} class="center table-bordered" rules="all">
         <tbody>
-          {coArray.map(function (co, index) {
+        {Object.keys(COList).map(function (coc, index) {
+            console.log(coc)
+            return (
+              <tr>
+                <td>{COList[coc]["value"]}</td>
+                <td style={{ width: "95%" }}>{COList[coc]["label"]}</td>
+              </tr>)
+          })}
+          {/* {coArray.map(function (co, index) {
             return (
               <tr>
                 <td>{"CO" + (index + 1)}</td>
                 <td style={{ width: "95%" }}></td>
               </tr>)
-          })}
+          })} */}
         </tbody>
       </table>
       <br></br>

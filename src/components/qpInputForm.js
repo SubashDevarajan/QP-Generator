@@ -4,6 +4,7 @@ import { DataStorage } from './dataProvider';
 import { useContext, useState, useEffect } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
+import { Divider } from '@mui/material';
 
 const InputForm = () => {
 
@@ -246,14 +247,20 @@ const InputForm = () => {
                     />
                 </div>
             </div>
-            <hr />
+            {/* <hr /> */}
+            <div class="mb-2">
+                <Divider />
+
+            </div>
             <div class="row mb-3">
                 <h5 class="p-1 mx-2 col-lg-3" align="left">Question <span>{currentQuestion}</span> : </h5>
                 <textarea
                     name='question'
+                    id='question'
                     style={{ resize: "none", height: 300 }}
                     type="text" onChange={handleQuestionChange}
                     class="m-2 mx-3 form-control"
+                    // spellCheck="true"
                     value={qpData[current['section']][currentQuestion]["question"]}
                 />
             </div>
