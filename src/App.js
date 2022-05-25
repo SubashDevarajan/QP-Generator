@@ -15,6 +15,8 @@ import Dashboard from "./dashboard/Dashboard";
 import Progress from "./components/progressBar";
 import Admin from "./admin/admin";
 import MyEditor from "./components/RichText"
+import ExportPdfComponent from "./components/exportComponent";
+import Examplee from "./components/printFC";
 
 function App() {
   const token = localStorage.getItem("AuthId");
@@ -22,8 +24,17 @@ function App() {
 
   return (
     <>
-      {/* <Progress /> */}
-      {/* <MyEditor /> */}
+      {/* <DataProvider>
+        <ExportPdfComponent />
+        <Examplee />
+        <ResponsiveAppBar></ResponsiveAppBar>
+        <div>
+          <QPInputPanel />
+        </div>
+        <div class="fixed-bottom">
+          <Footer />
+        </div>
+      </DataProvider> */}
       <Router>
         <div className="App">
           <Routes>

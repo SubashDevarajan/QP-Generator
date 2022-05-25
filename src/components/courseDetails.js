@@ -21,7 +21,6 @@ const CourseDetails = () => {
       ...qpInfo,
       [e.name]: v.value
     });
-    console.log(qpInfo)
   }
 
   function handleChange() {

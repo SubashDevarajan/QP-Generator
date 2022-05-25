@@ -32,7 +32,7 @@ const Preview = () => {
   // console.log(COList)
 
   return (
-    <>
+    <div class="w-100">
       <h4 class="text_center font">{qpInfo["university"]} </h4>
       <h4 class="text_center font">{qpInfo["description"]}</h4>
       <p class="align_text font">{qpInfo["branch"]}</p>
@@ -43,14 +43,14 @@ const Preview = () => {
       <p class="align_right font">{"Max.Marks: " + qpInfo["marks"]}</p>
       <p class="float font">Answer ALL Questions</p>
       <div style={{ clear: "both" }}></div>
-      <table id="fetch" style={{ width: "70%" }} class="center table-bordered" rules="all">
+      <table id="fetch" style={{ width: "100%" }} class="center table-bordered" rules="all">
         <tbody>
         {Object.keys(COList).map(function (coc, index) {
-            console.log(coc)
+            // console.log(coc)
             return (
               <tr>
                 <td>{COList[coc]["value"]}</td>
-                <td style={{ width: "95%" }}>{COList[coc]["label"]}</td>
+                <td style={{ width: "100%" }}>{COList[coc]["label"]}</td>
               </tr>)
           })}
           {/* {coArray.map(function (co, index) {
@@ -65,16 +65,16 @@ const Preview = () => {
       <br></br>
       <u class="bold">Part-A (10 x 2 =20 Marks)</u>
 
-      <table id="fetch" style={{ width: "80%" }} class="text_center table-bordered">
+      <table id="fetch" style={{ width: "100%" }} class="text_center table-bordered">
         <thead>
           <tr className="normal">
             <th>Sl.No.</th>
-            <th style={{ width: "70%" }} text>
+            <th style={{ width: "100%" }} text>
               Questions
             </th>
             <th>Marks</th>
-            <th style={{ width: "7%" }}>CO</th>
-            <th style={{ width: "7%" }}>BL</th>
+            <th style={{ width: "100%" }}>CO</th>
+            <th style={{ width: "100%" }}>BL</th>
           </tr>
         </thead>
         <tbody>
@@ -148,7 +148,7 @@ const Preview = () => {
           })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 

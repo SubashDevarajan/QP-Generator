@@ -24,7 +24,7 @@ const Progress = () => {
         }
     }
 
-    console.log(currentBlMarks)
+    // console.log(currentBlMarks)
 
     const blStandards =
     {
@@ -39,7 +39,7 @@ const Progress = () => {
         higher: (currentBlMarks["BL5"] || 0) + (currentBlMarks["BL6"] || 0)
     }
 
-    console.log(currentBlValues)
+    // console.log(currentBlValues)
 
     var colorValues = {
         lower: "danger",
