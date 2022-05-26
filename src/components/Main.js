@@ -9,7 +9,7 @@ import background from "../images/bg-question.webp";
 function Main() {
   useEffect(() => {
     const token = localStorage.getItem("AuthId");
-    console.log(token);
+    // console.log(token);
     if (token == null) {
       window.location.href = "/";
     }
@@ -17,7 +17,7 @@ function Main() {
   return (
     <>
       <div
-        className="App"
+        // className="App"
         style={{
           backgroundImage: `url(${background})`,
         }}
