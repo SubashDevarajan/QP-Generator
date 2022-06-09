@@ -1,5 +1,4 @@
 .template_section{
-    background-color:#E9ECEF;
     padding-left: 3px;
     padding-top:7px;
     padding-bottom:26px;
@@ -17,9 +16,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-   
-    
+    flex-wrap: wrap;    
 }
 
 
@@ -50,7 +47,6 @@
     flex-direction: row;
     justify-content: flex-start;
     flex-wrap: wrap;
-    background-color: #E9ECEF;
 }
 
 
@@ -63,12 +59,12 @@
     height:120px;
     width:140px;
     border-radius:2px;
-    border:0.5px solid cadetblue;
+    border:0.5px solid #fffdf7;
     cursor: pointer;
 }
 
 .card_image:hover{
-    border:1px solid #850fa3;
+    border:1px solid #6e2594;
 }
 
 .title1{

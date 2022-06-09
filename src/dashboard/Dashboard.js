@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Header";
 import Mainbody from "./Mainbody";
 import Templates from "./Templates";
+import ResponsiveAppBar from "../components/navbar";
 
 function Dashboard() {
   useEffect(() => {
@@ -13,9 +14,11 @@ function Dashboard() {
     }
   });
   return (
-    <div className="app">
-      <Header />
+    <div>
+      <ResponsiveAppBar />
+      {/* <Header /> */}
       <Templates />
+      {/* <MediaCard /> */}
       <Mainbody />
     </div>
   );
