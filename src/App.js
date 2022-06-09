@@ -26,11 +26,11 @@ function App() {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         localStorage.setItem("AuthId", res.data.accessToken);
         // setItemOnLocalStorage('RefId', res.data.refreshToken);
         // setItemOnLocalStorage('Role', res.data.user.role);
-        console.log(localStorage.getItem("AuthId"));
+        // console.log(localStorage.getItem("AuthId"));
       });
   };
 

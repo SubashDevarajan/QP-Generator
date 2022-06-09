@@ -45,6 +45,7 @@ const CourseDetails = () => {
   const regulations = [{ value: "2019", label: "2019" }];
   const [value, setValue] = React.useState(null);
   const [course, setCourse] = useState([]);
+  const [courseOutcome, setCourseOutcome] = useState([]);
   useEffect(() => {
     const a = axios
       .get("http://localhost:5000/api/course")
@@ -61,12 +62,16 @@ const CourseDetails = () => {
     CourseList.push({ value: course[i]["coursecode"] + " - " + course[i]["coursename"], label: course[i]["coursecode"] + " - " + course[i]["coursename"] })
   }
 
+  console.log(CourseList)
+
   
   useEffect(() => {
     const a = axios
-      .get("http://localhost:5000/api/courseoutcome",{coursecode:"XC7453"})
+      .get("http://localhost:5000/api/courseoutcome",{params: {
+        coursecode:"XC7453"
+      }})
       .then((res) => {
-        setCourse(res.data.rows);
+        setCourseOutcome(res.data.rows);
         console.log(res.data.rows);
       })
       .catch((e) => console.log(e));

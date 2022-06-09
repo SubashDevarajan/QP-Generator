@@ -18,7 +18,7 @@ const Preview = () => {
       .get("http://localhost:5000/api/courseoutcome")
       .then((res) => {
         setCo(res.data.rows);
-        // console.log(res.data.rows);
+        console.log(res.data.rows);
       })
       .catch((e) => console.log(e));
   }, []);
