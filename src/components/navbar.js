@@ -42,7 +42,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 function handleChange(v, e) {
-  console.log(v, e)
+  console.log(v, e);
 }
 
 const ResponsiveAppBar = () => {
@@ -63,17 +63,16 @@ const ResponsiveAppBar = () => {
   const handleClose = () => setOpen(false);
 
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     // width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
-
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
@@ -94,12 +93,17 @@ const ResponsiveAppBar = () => {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <button
-                type="button"
-                class="btn btn-primary me-3" onClick={handleOpen}
-              >
-                Course Details
-              </button>
+              {window.location.pathname == "/input-form" ? (
+                <button
+                  type="button"
+                  class="btn btn-primary me-3"
+                  onClick={handleOpen}
+                >
+                  Course Details
+                </button>
+              ) : (
+                <></>
+              )}
             </li>
           </ul>
           <form class="d-flex">
@@ -121,9 +125,14 @@ const ResponsiveAppBar = () => {
               <div class="mb-3">
                 <CourseDetails />
                 <div class="d-flex flex-row-reverse">
-                  <button class="mx-4 col-lg-2 btn btn-primary" onClick = {handleClose} type="button">Proceed</button>
+                  <button
+                    class="mx-4 col-lg-2 btn btn-primary"
+                    onClick={handleClose}
+                    type="button"
+                  >
+                    Proceed
+                  </button>
                 </div>
-
               </div>
             </Box>
           </Modal>

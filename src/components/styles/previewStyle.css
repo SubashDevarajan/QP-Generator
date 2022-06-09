@@ -1,40 +1,56 @@
-table,th,td {
-  border:1px solid black;
+table,
+th,
+td {
+  border: 2px solid black;
   padding: 5px;
   font-size: medium;
   font-weight: normal;
-  font-family: 'Times New Roman', Times, serif;
-} 
-table.table-bordered{
-  border:1px solid black;
-  margin-top:20px;
 }
-table.table-bordered > thead > tr > th{
-  border:1px solid black;
+
+table.width {
+  width: 85%;
 }
-table.table-bordered > tbody > tr > td{
-  border:1px solid black;
+
+table.table-bordered {
+  border: 1px solid black;
+  margin-top: 20px;
 }
-table{
+
+table.table-bordered>thead>tr>th {
+  border: 1px solid black;
+}
+
+table.table-bordered>tbody>tr>td {
+  border: 1px solid black;
+}
+
+table {
   border-collapse: collapse;
 }
+
 tr {
- text-align: center;
- border: 1px solid black;
- /* height: 100px; */
+  text-align: center;
+  border: 1px solid black;
+  /* height: 100px; */
 }
-.font{
-  font-family: 'Times New Roman', Times, serif;
+
+.font {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 20px;
 }
-.padding{
+
+.padding {
   margin-top: -5px;
 }
-.bold{
+
+.bold {
   font-weight: bold;
 }
-.normal{
+
+.normal {
   font-weight: normal;
 }
+
 .text_center {
   text-align: center;
   margin-left: auto;
@@ -42,26 +58,76 @@ tr {
   width: 60%;
   padding: 3px;
 }
- .center {
-   text-align: left;
-   margin-left: auto;
-   margin-right: auto;
-   width: 45%;
-   /* padding: 3px; */
- }
- .align_text{
-   line-height: 0.3;
-   text-align: center;
-   padding: 2px;
- }
-.float{
-  float: 33%;
+
+.center {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  padding: 3px;
 }
-.align_left{
+
+.align_text {
+  line-height: 0.3;
+  text-align: center;
+  padding: 2px;
+}
+
+.align_left {
   float: left;
   margin-left: 15.3%;
 }
-.align_right{
+
+.align_right {
   float: right;
   margin-right: 15.3%;
+}
+
+.para_center {
+  text-align: center;
+  padding: 3px;
+  font-size: medium;
+}
+
+.p_center {
+  text-align: center;
+  padding: 3px;
+}
+
+#ulist li {
+  border: .5px solid black;
+  padding: .7em;
+  margin: .5px;
+}
+
+#ulist {
+  float: 40px;
+  margin-right: 15.3%;
+  display: flex;
+  list-style: none;
+}
+
+.level {
+  width: 90%;
+  padding: 3px;
+  text-align: left;
+  font-size: 14px;
+  margin-left: 85px;
+  margin-top: -23px;
+}
+
+.padding_level{
+  /* width: 90%; */
+  padding: 3px;
+  text-align: left;
+  font-size: 14px;
+  margin-left: 85px;
+  margin-top: -5px;
+}
+
+.margin {
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
