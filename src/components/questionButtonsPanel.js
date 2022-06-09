@@ -6,9 +6,10 @@ import { DataStorage } from "./dataProvider";
 
 
 const QPButtonPanel = () => {
-    const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData] = useContext(DataStorage);
+    const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
+    const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
 
-    const types = ["secondary", "primary", "success"];
+    const types = ["secondary", "primary", "success", "warning"];
 
     const useStyles = makeStyles({
         root: {
@@ -47,7 +48,10 @@ const QPButtonPanel = () => {
     return (
         <Paper className={classes.root}>
             {Object.keys(qpData[current["section"]]).map(function (ques, index) {
-                return <button class={"me-2 mb-2 col-lg-5 btn btn-" + types[qpData[current["section"]][ques]["state"]]} id={"btn-" + current["section"] + "-" + index} onClick={handleClick} type="button">{ques}</button>;
+                var colorState = qpData[current["section"]][ques]["state"];
+                if(ques == currentQuestion)
+                colorState = 3;
+                return <button class={"me-2 mb-2 col-lg-5 btn btn-" + types[colorState]} id={"btn-" + current["section"] + "-" + index} onClick={handleClick} type="button">{ques}</button>;
             })}
         </Paper>
     )

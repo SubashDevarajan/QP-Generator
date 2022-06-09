@@ -50,7 +50,7 @@ const CourseDetails = () => {
       .get("http://localhost:5000/api/course")
       .then((res) => {
         setCourse(res.data.rows);
-        // console.log(res.data.rows);
+        console.log(res.data.rows);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -60,6 +60,17 @@ const CourseDetails = () => {
   for (let i in course) {
     CourseList.push({ value: course[i]["coursecode"] + " - " + course[i]["coursename"], label: course[i]["coursecode"] + " - " + course[i]["coursename"] })
   }
+
+  
+  useEffect(() => {
+    const a = axios
+      .get("http://localhost:5000/api/courseoutcome",{coursecode:"XC7453"})
+      .then((res) => {
+        setCourse(res.data.rows);
+        console.log(res.data.rows);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
 
   return (

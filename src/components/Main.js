@@ -4,6 +4,7 @@ import QPInputPanel from "./qpInputPanel";
 import ResponsiveAppBar from "./navbar";
 import { DataProvider } from "./dataProvider";
 import background from "../images/bg-question.webp";
+import { grey, lightBlue } from "@mui/material/colors";
 // import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 function Main() {
@@ -19,7 +20,8 @@ function Main() {
       <div
         // className="App"
         style={{
-          backgroundImage: `url(${background})`,
+          // backgroundImage: `url(${background})`,
+          backgroundColor : "lightBlue"
         }}
       >
         <DataProvider>

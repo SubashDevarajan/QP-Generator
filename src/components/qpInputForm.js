@@ -5,17 +5,18 @@ import { useContext, useState, useEffect } from 'react';
 import Select from 'react-select';
 import axios from 'axios';
 import { Divider } from '@mui/material';
+import { Button, ButtonGroup } from 'react-bootstrap';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 const InputForm = () => {
 
-    // this.state = {
-    //     fruit: "banana",
-    //   };
-
-
-
     const [bl, setBl] = useState([]);
     const [co, setCo] = useState([]);
+    const [subDiv, setSubDiv] = useState('left');
+
+    const handleSubDiv = (event, sd) => {
+        setSubDiv(sd);
+    };
     useEffect(() => {
         const a = axios
             .get("http://localhost:5000/api/bldetails_all")
@@ -116,31 +117,14 @@ const InputForm = () => {
                 ...qpData[current["section"]],
                 [currentQuestion]: {
                     ...qpData[current["section"]][currentQuestion],
-                    question : "",
-                    blVerb : "",
-                    blLevel : "",
-                    courseOutcome : ""
+                    question: "",
+                    blVerb: "",
+                    blLevel: "",
+                    courseOutcome: "",
+                    state: 0
                 }
             }
         });
-        // var curQues = qpData[current["section"]][currentQuestion];
-        // for (let j in curQues) {
-        //     var v = ""
-        //     if(j == "state")
-        //     v = "1"
-        //     console.log(j,v)
-        //     setQPData({
-        //         ...qpData,
-        //         [current["section"]]: {
-        //             ...qpData[current["section"]],
-        //             [currentQuestion]: {
-        //                 ...qpData[current["section"]][currentQuestion],
-        //                 j : v
-        //             }
-        //         }
-        //     });
-        // }
-        // console.log(qpData);
     }
 
 
@@ -171,6 +155,10 @@ const InputForm = () => {
         });
     }
 
+    function handleSubDivToggler(s, e) {
+        console.log(e)
+    }
+
     function addBLVerb(e) {
         var curQuestionData = qpData[current["section"]][currentQuestion]["question"];
         var curQuestionBlverb = qpData[current["section"]][currentQuestion]["blVerb"];
@@ -195,7 +183,31 @@ const InputForm = () => {
 
     return (
         <div class="container form form-control row">
-            <div class="row my-3">
+            <div class="row mt-2">
+                <h5 class="ps-3 pt-2 col-lg-3" align="left">Question <span>{currentQuestion}</span> : </h5>
+                {current["section"] != "A" && <div class="d-flex flex-row-reverse p-0 col-lg-9">
+                    <ToggleButtonGroup
+                        value={subDiv}
+                        color='success'
+                        exclusive
+                        onChange={handleSubDiv}
+                        aria-label="text alignment"
+                        size='small'
+                    >
+                        <ToggleButton value="i" onClick={handleSubDivToggler} size='small' aria-label="left aligned">
+                            <span class="text-capitalize font-weight-bold">{"Sub Division"}</span>&nbsp;<span class="text-lowercase font-weight-bold">{"(i)"}</span>
+                        </ToggleButton>
+                        <ToggleButton value="ii" onClick={handleSubDivToggler} size='small' aria-label="centered">
+                            <span class="text-capitalize font-weight-bold">{"Sub Division"}</span>&nbsp;<span class="text-lowercase font-weight-bold">{"(ii)"}</span>
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </div>}
+                <div class="mt-2 mb-2">
+                    <Divider />
+
+                </div>
+            </div>
+            <div class="row mt-1 mb-3">
                 <h5 class="col-lg-3 p-1">Course Outcome</h5>
                 <div class="col-lg-9">
                     <Select
@@ -235,18 +247,15 @@ const InputForm = () => {
                 </div>
             </div>
             {/* <hr /> */}
-            <div class="mb-2">
-                <Divider />
-
-            </div>
-            <div class="row mb-3">
-                <h5 class="p-1 mx-2 col-lg-3" align="left">Question <span>{currentQuestion}</span> : </h5>
+            <div class="row mb-3 p-1">
+                <h5 class="col-lg-3 ms-2" align="left">Question:</h5>
                 <textarea
                     name='question'
                     id='question'
-                    style={{ resize: "none", height: 300 }}
+                    style={{ resize: "none", height: 250 }}
                     type="text" onChange={handleQuestionChange}
                     class="m-2 mx-3 form-control"
+                    placeholder='haha'
                     // spellCheck="true"
                     value={qpData[current['section']][currentQuestion]["question"]}
                 />

@@ -1,9 +1,5 @@
-// import "./App.css";
-import Footer from "./components/footer";
+
 import QPInputPanel from "./components/qpInputPanel";
-import ResponsiveAppBar from "./components/navbar";
-import { DataProvider } from "./components/dataProvider";
-import background from "./images/bg-question.webp";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
@@ -16,12 +12,6 @@ import Progress from "./components/progressBar";
 import axios from "axios";
 import { useEffect } from "react";
 import Admin from "./admin/admin";
-
-import MyEditor from "./components/RichText";
-=======
-import MyEditor from "./components/RichText"
-import ExportPdfComponent from "./components/exportComponent";
-import Examplee from "./components/printFC";
 
 function App() {
   const token = localStorage.getItem("AuthId");
@@ -50,17 +40,6 @@ function App() {
 
   return (
     <>
-      {/* <DataProvider>
-        <ExportPdfComponent />
-        <Examplee />
-        <ResponsiveAppBar></ResponsiveAppBar>
-        <div>
-          <QPInputPanel />
-        </div>
-        <div class="fixed-bottom">
-          <Footer />
-        </div>
-      </DataProvider> */}
       <Router>
         <div className="App">
           <Routes>
