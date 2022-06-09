@@ -2,15 +2,19 @@ import SectionTab from "./sectionTabs";
 import InputForm from "./qpInputForm";
 import QPButtonPanel from "./questionButtonsPanel";
 import { DataStorage } from "./dataProvider";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import * as React from 'react';
 import { Box, Typography, Modal, Paper } from "@mui/material";
 import Demo from "./demo";
+import ReactToPrint from "react-to-print";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Preview from "./Preview";
 import Progress from "./progressBar";
 import Print from "./Print";
+import ExportPdfComponent from "./exportComponent";
+import TableComponent from "./tableComponent";
+import ComponentToPrint from "./printFC";
 
 const QPInputPanel = () => {
   const [openBl, setOpenBl] = React.useState(false);
@@ -41,6 +45,7 @@ const QPInputPanel = () => {
     }
   });
 
+  const componentRef = useRef();
 
   const classes = useStyles();
 
@@ -114,7 +119,13 @@ const QPInputPanel = () => {
             {/* <button class="btn btn-success mx-3" type="submit">
               Print
             </button> */}
-            <Print />
+            {/* <Print /> */}
+            <div>
+              <ReactToPrint
+                trigger={() => <button className="btn btn-primary">Print to PDF!</button>}
+                content={() => componentRef.current}
+              />
+            </div>
           </div>
         </Paper>
       </div>
@@ -188,7 +199,9 @@ const QPInputPanel = () => {
               </button>
             </div>
             <div class="modal-body">
-              <Preview />
+              {/* <TableComponent ref={(response) => (this.componentRef = response)} /> */}
+              <ComponentToPrint ref={componentRef} />
+              {/* <Preview /> */}
             </div>
             <div class="modal-footer">
               <button

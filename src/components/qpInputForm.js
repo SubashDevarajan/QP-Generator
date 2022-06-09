@@ -83,6 +83,7 @@ const InputForm = () => {
     }
 
     function handleSelectChange(v, e) {
+        console.log(qpData);
 
         var curQues = qpData[current["section"]][currentQuestion];
         var arr = ["blLevel", "blVerb", "courseOutcome", "question"]
@@ -95,7 +96,6 @@ const InputForm = () => {
                 }
             }
         }
-
         setQPData({
             ...qpData,
             [current["section"]]: {
@@ -107,35 +107,22 @@ const InputForm = () => {
                 }
             }
         });
-        // setQPData({
-        //     ...qpData,
-        //     [current["section"]]: {
-        //         ...qpData[current["section"]],
-        //         [currentQuestion]: {
-        //             ...qpData[current["section"]][currentQuestion],
-        //             state: 1
-        //         }
-        //     }
-        // });
-        // var state = 0;
-        // console.log(curQues)
     }
 
-
-    useEffect(() => {
-        // setQPDataa({
-        //     ...qpDataa,
-        //     [current["section"]]: {
-        //         ...qpDataa[current["section"]],
-        //         [currentQuestion]: {
-        //             ...qpDataa[current["section"]][currentQuestion],
-        //             state: 1
-        //         }
-        //     }
-        // });
-    }, [qpData]);
-
     function handleReset() {
+        setQPData({
+            ...qpData,
+            [current["section"]]: {
+                ...qpData[current["section"]],
+                [currentQuestion]: {
+                    ...qpData[current["section"]][currentQuestion],
+                    question : "",
+                    blVerb : "",
+                    blLevel : "",
+                    courseOutcome : ""
+                }
+            }
+        });
         // var curQues = qpData[current["section"]][currentQuestion];
         // for (let j in curQues) {
         //     var v = ""

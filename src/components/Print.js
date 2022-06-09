@@ -1,38 +1,33 @@
-// import  { useRef } from "react";
-// import  { jsPDF } from "jspdf";
-// import  html2canvas from "html2canvas";
-// import  Preview from "./Preview";
-// import './styles/previewStyle.css';
-import pdfFile from './XC5551 - Software Engineering.pdf'; 
+import ReactToPrint from "react-to-print";
+import ComponentToPrint from "./printFC";
+import pdfFile from './XC5551 - Software Engineering.pdf';
 
 const Print = () => {
 
-  // const inputReference = useRef(null);
-  // const printDocument = () => {
-  //   const input = document.getElementById('pdf-element');
-  //  const pdf = new jsPDF({ unit: "px", format: "letter", userUnit: "px" });
-  //  pdf.html(input, { html2canvas: { scale: 0.57 } }).then(() => {
-  //    pdf.save("test.pdf");
-  //   });
-  // };
-  
-  
-  function print(){
-window.open(pdfFile, "PRINT", "height=800,width=700");  }
 
-function somefunction(){
-  // printDocument();
-  print();
-}
+  function print() {
+    window.open(pdfFile, "PRINT", "height=800,width=700");
+  }
+
+  function somefunction() {
+    // printDocument();
+    print();
+  }
   return (
     <>
-      <button class="btn btn-success mx-3" onClick={somefunction} type="submit">
-      Print
-            </button>
-        {/* <div className="mb5">
+      {/* <button class="btn btn-success mx-3" onClick={somefunction} type="submit">
+        Print
+      </button> */}
+      {/* <div>
+        <ReactToPrint
+          trigger={() => <a href="#">Print this out!</a>}
+          content={() => componentRef.current}
+        />  
+      </div> */}
+      {/* <div className="mb5">
           <button onClick={somefunction}>Print</button>
         </div> */}
-        {/* <div  ref={inputReference}>
+      {/* <div  ref={inputReference}>
          <Preview/>
         </div> */}
     </>
