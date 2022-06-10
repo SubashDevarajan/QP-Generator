@@ -1,7 +1,6 @@
 import { Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
-import Demo from "./demo";
 import { Modal } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
@@ -45,7 +44,7 @@ function handleChange(v, e) {
   console.log(v, e);
 }
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -61,7 +60,7 @@ const ResponsiveAppBar = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  console.log(props.show)
   const style = {
     position: "absolute",
     top: "50%",
@@ -93,7 +92,7 @@ const ResponsiveAppBar = () => {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              {window.location.pathname == "/input-form" ? (
+              {props.show ? (
                 <button
                   type="button"
                   class="btn btn-primary me-3"

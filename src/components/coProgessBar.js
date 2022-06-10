@@ -3,7 +3,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useState, useEffect, useContext } from 'react';
 import { DataStorage } from './dataProvider';
 
-const Progress = () => {
+const ProgressCo = () => {
 
 
     const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
@@ -11,7 +11,7 @@ const Progress = () => {
 
     // console.log(qpData)
 
-    var currentBlMarks = {};
+    var currentCoMarks = {};
 
 
 
@@ -19,43 +19,53 @@ const Progress = () => {
         for (let j in qpData[i]) {
             if (j.split(" ")[1] == "(b)")
                 continue
-            if (qpData[i][j]["i"]["blLevel"] in currentBlMarks)
-                currentBlMarks[qpData[i][j]["i"]["blLevel"]] += qpData[i][j]["i"]["marks"];
+            if (qpData[i][j]["i"]["courseOutcome"] in currentCoMarks)
+                currentCoMarks[qpData[i][j]["i"]["courseOutcome"]] += qpData[i][j]["i"]["marks"];
             else
-                currentBlMarks[qpData[i][j]["i"]["blLevel"]] = qpData[i][j]["i"]["marks"];
+                currentCoMarks[qpData[i][j]["i"]["courseOutcome"]] = qpData[i][j]["i"]["marks"];
         }
     }
 
-    console.log(currentBlMarks)
+    console.log(currentCoMarks)
 
-    const blStandards =
+    const coStandards =
     {
-        lower: [20, 35],
-        intermediate: [40, 100],
-        higher: [15, 25]
+        CO1: [0,17],
+        CO2: [0,17],
+        CO3: [0,17],
+        CO4: [0,25],
+        CO5: [0,24]
     }
 
-    var currentBlValues = {
-        lower: (currentBlMarks["BL1"] || 0) + (currentBlMarks["BL2"] || 0),
-        intermediate: (currentBlMarks["BL3"] || 0) + (currentBlMarks["BL4"] || 0),
-        higher: (currentBlMarks["BL5"] || 0) + (currentBlMarks["BL6"] || 0)
+    var currentCoValues = {
+        CO1: (currentCoMarks["CO1"] || 0),
+        CO2: (currentCoMarks["CO2"] || 0),
+        CO3: (currentCoMarks["CO3"] || 0),
+        CO4: (currentCoMarks["CO4"] || 0),
+        CO5: (currentCoMarks["CO5"] || 0)
     }
 
-    // console.log(currentBlValues)
+    // console.log(currentCoValues)
 
     var colorValues = {
-        lower: "danger",
-        intermediate: "danger",
-        higher: "danger"
+        CO1: "danger",
+        CO2: "danger",
+        CO3: "danger",
+        CO4: "danger",
+        CO5: "danger"
     }
 
-    var orderArray = ["lower", "intermediate", "higher"]
+    var orderArray = ["CO1",
+    "CO2",
+    "CO3",
+    "CO4",
+    "CO5"]
     for (let i in orderArray) {
-        if (blStandards[orderArray[i]][0] <= currentBlValues[orderArray[i]] && blStandards[orderArray[i]][1] >= currentBlValues[orderArray[i]]) {
+        if (coStandards[orderArray[i]][0] <= currentCoValues[orderArray[i]] && coStandards[orderArray[i]][1] >= currentCoValues[orderArray[i]]) {
             colorValues[orderArray[i]] = "success"
         }
         else {
-            if (blStandards[orderArray[i]][0] > currentBlValues[orderArray[i]])
+            if (coStandards[orderArray[i]][0] > currentCoValues[orderArray[i]])
                 colorValues[orderArray[i]] = "warning"
         }
     }
@@ -74,7 +84,7 @@ const Progress = () => {
                         <ProgressBar variant="success" now={15} key={2} />
                         <ProgressBar variant="light" now={65} key={3} />
                     </ProgressBar> */}
-                    <ProgressBar className='my-1' variant={colorValues["lower"]} now={currentBlValues["lower"]} />
+                    <ProgressBar className='my-1' variant={colorValues["lower"]} now={currentCoValues["lower"]} />
 
                 </div>
             </div>
@@ -87,7 +97,7 @@ const Progress = () => {
                         <ProgressBar variant="light" now={40} key={1} />
                         <ProgressBar variant="success" now={60} key={2} />
                     </ProgressBar> */}
-                    <ProgressBar className='my-1' variant={colorValues["intermediate"]} now={currentBlValues["intermediate"]} />
+                    <ProgressBar className='my-1' variant={colorValues["intermediate"]} now={currentCoValues["intermediate"]} />
                 </div>
             </div>
             <div class="row my-2">
@@ -100,7 +110,7 @@ const Progress = () => {
                         <ProgressBar variant="success" now={10} key={2} />
                         <ProgressBar variant="light" now={75} key={3} />
                     </ProgressBar> */}
-                    <ProgressBar className='my-1' variant={colorValues["higher"]} now={currentBlValues["higher"]} />
+                    <ProgressBar className='my-1' variant={colorValues["higher"]} now={currentCoValues["higher"]} />
                 </div>
             </div>
             <div class="row my-2">
@@ -108,11 +118,11 @@ const Progress = () => {
                     <h5>Unallocated Marks</h5>
                 </div>
                 <div class="col-lg-7">
-                    <h5>{currentBlMarks[""]}</h5>
+                    <h5>{currentCoMarks[""]}</h5>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Progress;
+export default ProgressCo;

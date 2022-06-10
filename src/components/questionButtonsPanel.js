@@ -40,15 +40,15 @@ const QPButtonPanel = () => {
     function handleClick(e) {
         // console.log(e.target.id.split("-").at(-2));
         const qn = parseInt(e.target.id.split("-").at(-1));
-        console.log(qn);
-        setCurrent(prev => ({ ...current, questionIndex: qn }));
+        // console.log(qn);
+        setCurrent(prev => ({ ...current, questionIndex: qn, subDiv : "i" }));
     }
 
 
     return (
         <Paper className={classes.root}>
             {Object.keys(qpData[current["section"]]).map(function (ques, index) {
-                var colorState = qpData[current["section"]][ques]["state"];
+                var colorState = qpData[current["section"]][ques][current["subDiv"]]["state"];
                 if(ques == currentQuestion)
                 colorState = 3;
                 return <button class={"me-2 mb-2 col-lg-5 btn btn-" + types[colorState]} id={"btn-" + current["section"] + "-" + index} onClick={handleClick} type="button">{ques}</button>;

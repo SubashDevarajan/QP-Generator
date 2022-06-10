@@ -15,10 +15,9 @@ function Dashboard() {
   });
   return (
     <div>
-      <ResponsiveAppBar />
-      {/* <Header /> */}
+      {/* <p> hi </p> */}
+      <ResponsiveAppBar show={false} />
       <Templates />
-      {/* <MediaCard /> */}
       <Mainbody />
     </div>
   );

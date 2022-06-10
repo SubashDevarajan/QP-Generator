@@ -5,15 +5,11 @@ import { DataStorage } from "./dataProvider";
 import { useContext, useRef } from "react";
 import * as React from 'react';
 import { Box, Typography, Modal, Paper } from "@mui/material";
-import Demo from "./demo";
 import ReactToPrint from "react-to-print";
 
 import { makeStyles } from '@material-ui/core/styles';
 import Preview from "./Preview";
 import Progress from "./progressBar";
-import Print from "./Print";
-import ExportPdfComponent from "./exportComponent";
-import TableComponent from "./tableComponent";
 import ComponentToPrint from "./printFC";
 
 const QPInputPanel = () => {
@@ -102,6 +98,7 @@ const QPInputPanel = () => {
             >
               BL Level
             </button>
+            
             <button type="button" class="btn btn-secondary">
               Course Outcome
             </button>

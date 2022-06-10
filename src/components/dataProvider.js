@@ -17,7 +17,7 @@ export const DataProvider = ({ children }) => {
         university: "ANNA UNIVERSITY (UNIVERSITY DEPARTMENTS)",
         description: "END SEMESTER EXAMINATIONS-NOV/DEC 2022",
         campus: "College Of Engineering, Guindy",
-        subjectCodeTitle : "MA1234 - Numerical Methods",
+        subjectCodeTitle: "MA1234 - Numerical Methods",
         // subjectTitle: 'Numerical Methods',
         time: "3",
         // subjectCode: 'MA1234',
@@ -31,6 +31,7 @@ export const DataProvider = ({ children }) => {
 
     const [current, setCurrent] = useState({
         questionIndex: 0,
+        subDiv: "i",
         section: "A"
     })
 
@@ -41,7 +42,8 @@ export const DataProvider = ({ children }) => {
         courseOutcome: "",
         marks: 2,
         question: "",
-        state: 0
+        state: 0,
+        subDiv: "i"
     };
 
     Object.keys(sectionQuestions).forEach(function (section, index) {
@@ -60,12 +62,20 @@ export const DataProvider = ({ children }) => {
             default:
             // code block
         }
+
+
         sectionQuestions[section].forEach(function (ques, ind) {
-            qpDataframe[section][ques] = {...questionTemplate,marks:mark};
+
+            qpDataframe[section][ques] = {}
+            var subDivArr = ["i", "ii"];
+            subDivArr.forEach(function (sd, i) {
+                qpDataframe[section][ques][sd] = { ...questionTemplate, marks: mark };
+            })
         })
     });
-    const [qpData, setQPData] = useState(qpDataframe)
 
+    const [qpData, setQPData] = useState(qpDataframe)
+    // console.log(qpData[current["section"]])
     return (
         <DataStorage.Provider value={[current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions]}>
             {children}

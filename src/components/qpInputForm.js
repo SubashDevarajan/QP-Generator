@@ -10,12 +10,17 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 const InputForm = () => {
 
+    const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
+    const [sds, setCurrenssdt, qpInfso, setQPInfdo, qpDataa, setQPDataa, sectionQuestionss] = useContext(DataStorage);
+    const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
+    const [state, setState] = useState();
     const [bl, setBl] = useState([]);
     const [co, setCo] = useState([]);
-    const [subDiv, setSubDiv] = useState('left');
 
     const handleSubDiv = (event, sd) => {
-        setSubDiv(sd);
+        if (!sd)
+            sd = current["subDiv"]
+        setCurrent({ ...current, subDiv: sd });
     };
     useEffect(() => {
         const a = axios
@@ -26,19 +31,19 @@ const InputForm = () => {
             })
             .catch((e) => console.log(e));
     }, []);
+    const courseCode = qpInfo["subjectCodeTitle"].split(" ")[0];
+    console.log(courseCode)
     useEffect(() => {
-        let data = { coursecode: "XC7851" };
         const a = axios
-            .get("http://localhost:5000/api/courseoutcome")
+            .get(`http://localhost:5000/api/courseoutcome/${qpInfo["subjectCodeTitle"].split(" ")[0]}`)
             .then((res) => {
                 setCo(res.data.rows);
-                // console.log(res.data.rows);
+                console.log(res.data.rows);
             })
             .catch((e) => console.log(e));
-    }, []);
+    }, [qpInfo]);
 
 
-    // console.log(co)
 
 
     var BLVerbList = [];
@@ -64,11 +69,6 @@ const InputForm = () => {
         COList.push({ value: co[i]["levels"], label: co[i]["courseoutcomes"] })
     }
 
-    const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
-    const [sds, setCurrenssdt, qpInfso, setQPInfdo, qpDataa, setQPDataa, sectionQuestionss] = useContext(DataStorage);
-    const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
-    const [state, setState] = useState();
-
     function handleNext() {
         const questionNumbers = sectionQuestions[current["section"]];
         const currentIndex = current["questionIndex"];
@@ -84,9 +84,7 @@ const InputForm = () => {
     }
 
     function handleSelectChange(v, e) {
-        console.log(qpData);
-
-        var curQues = qpData[current["section"]][currentQuestion];
+        var curQues = qpData[current["section"]][currentQuestion][current["subDiv"]];
         var arr = ["blLevel", "blVerb", "courseOutcome", "question"]
         var state = 2;
         for (let j in arr) {
@@ -97,17 +95,59 @@ const InputForm = () => {
                 }
             }
         }
-        setQPData({
-            ...qpData,
-            [current["section"]]: {
-                ...qpData[current["section"]],
-                [currentQuestion]: {
-                    ...qpData[current["section"]][currentQuestion],
-                    [e.name]: v.value,
-                    state: state
+        if (current["section"] == "B")
+            setQPData({
+                ...qpData,
+                [current["section"]]: {
+                    ...qpData[current["section"]],
+                    [currentQuestion.substring(0, 2) + " (a)"]: {
+                        ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"],
+                        ["i"]: {
+                            ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"],
+                            [e.name]: v.value,
+                            state: state
+                        },
+                        ["ii"]: {
+                            ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"],
+                            [e.name]: v.value,
+                            state: state
+                        }
+                    },
+                    [currentQuestion.substring(0, 2) + " (b)"]: {
+                        ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"],
+                        ["i"]: {
+                            ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"],
+                            [e.name]: v.value,
+                            state: state
+                        },
+                        ["ii"]: {
+                            ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"],
+                            [e.name]: v.value,
+                            state: state
+                        }
+                    }
                 }
-            }
-        });
+            })
+        else
+            setQPData({
+                ...qpData,
+                [current["section"]]: {
+                    ...qpData[current["section"]],
+                    [currentQuestion]: {
+                        ...qpData[current["section"]][currentQuestion],
+                        ["i"]: {
+                            ...qpData[current["section"]][currentQuestion]["i"],
+                            [e.name]: v.value,
+                            state: state
+                        },
+                        ["ii"]: {
+                            ...qpData[current["section"]][currentQuestion]["i"],
+                            [e.name]: v.value,
+                            state: state
+                        }
+                    }
+                }
+            })
     }
 
     function handleReset() {
@@ -117,11 +157,14 @@ const InputForm = () => {
                 ...qpData[current["section"]],
                 [currentQuestion]: {
                     ...qpData[current["section"]][currentQuestion],
-                    question: "",
-                    blVerb: "",
-                    blLevel: "",
-                    courseOutcome: "",
-                    state: 0
+                    [current["subDiv"]]: {
+                        ...qpData[current["section"]][currentQuestion][current["subDiv"]],
+                        question: "",
+                        blVerb: "",
+                        blLevel: "",
+                        courseOutcome: "",
+                        state: 0
+                    }
                 }
             }
         });
@@ -129,52 +172,67 @@ const InputForm = () => {
 
 
     function handleQuestionChange(e) {
-
-        var curQues = qpData[current["section"]][currentQuestion];
+        var targetName = "question"
+        var curQues = qpData[current["section"]][currentQuestion][current["subDiv"]];
         var arr = ["blLevel", "blVerb", "courseOutcome", "question"]
         var state = 2;
         for (let j in arr) {
             if (curQues[arr[j]] == "") {
-                if (arr[j] != e.target.name) {
+                if (arr[j] != targetName) {
                     state = 1;
                     break;
                 }
             }
         }
-
         setQPData({
             ...qpData,
             [current["section"]]: {
                 ...qpData[current["section"]],
                 [currentQuestion]: {
                     ...qpData[current["section"]][currentQuestion],
-                    question: e.target.value,
-                    state: state
+                    [current["subDiv"]]: {
+                        ...qpData[current["section"]][currentQuestion][current["subDiv"]],
+                        question: e.target.value,
+                        state: state
+                    }
                 }
             }
         });
     }
 
     function handleSubDivToggler(s, e) {
-        console.log(e)
+        // console.log(e)
     }
 
     function addBLVerb(e) {
-        var curQuestionData = qpData[current["section"]][currentQuestion]["question"];
-        var curQuestionBlverb = qpData[current["section"]][currentQuestion]["blVerb"];
+        var curQuestionData = qpData[current["section"]][currentQuestion][current["subDiv"]]["question"];
+        var curQuestionBlverb = qpData[current["section"]][currentQuestion][current["subDiv"]]["blVerb"];
         var modifiedQuestion = "";
         if (curQuestionData == "")
             modifiedQuestion = curQuestionData + curQuestionBlverb.charAt(0).toUpperCase() + curQuestionBlverb.slice(1);
         else
             modifiedQuestion = curQuestionData + " " + curQuestionBlverb.charAt(0).toLowerCase() + curQuestionBlverb.slice(1);
 
+        // setQPData({
+        //     ...qpData,
+        //     [current["section"]]: {
+        //         ...qpData[current["section"]],
+        //         [currentQuestion]: {
+        //             ...qpData[current["section"]][currentQuestion],
+        //             question: modifiedQuestion
+        //         }
+        //     }
+        // });
         setQPData({
             ...qpData,
             [current["section"]]: {
                 ...qpData[current["section"]],
                 [currentQuestion]: {
                     ...qpData[current["section"]][currentQuestion],
-                    question: modifiedQuestion
+                    [current["subDiv"]]: {
+                        ...qpData[current["section"]][currentQuestion][current["subDiv"]],
+                        question: modifiedQuestion
+                    }
                 }
             }
         });
@@ -186,8 +244,9 @@ const InputForm = () => {
             <div class="row mt-2">
                 <h5 class="ps-3 pt-2 col-lg-3" align="left">Question <span>{currentQuestion}</span> : </h5>
                 {current["section"] != "A" && <div class="d-flex flex-row-reverse p-0 col-lg-9">
+
                     <ToggleButtonGroup
-                        value={subDiv}
+                        value={current["subDiv"]}
                         color='success'
                         exclusive
                         onChange={handleSubDiv}
@@ -217,7 +276,7 @@ const InputForm = () => {
                         options={COList}
                         onChange={handleSelectChange}
                         value={COList.filter(option =>
-                            option.value === qpData[current['section']][currentQuestion]["courseOutcome"])}
+                            option.value === qpData[current['section']][currentQuestion][current["subDiv"]]["courseOutcome"])}
                     />
                 </div>
             </div>
@@ -230,7 +289,7 @@ const InputForm = () => {
                         options={BLLevelList}
                         onChange={handleSelectChange}
                         value={BLLevelList.filter(option =>
-                            option.value === qpData[current['section']][currentQuestion]["blLevel"])}
+                            option.value === qpData[current['section']][currentQuestion][current["subDiv"]]["blLevel"])}
                     />
                 </div>
                 <h5 class="col-lg-3 p-1">Bloom Taxonomy Verb </h5>
@@ -242,22 +301,23 @@ const InputForm = () => {
                         options={BLVerbList}
                         onChange={handleSelectChange}
                         value={BLVerbList.filter(option =>
-                            option.value === qpData[current['section']][currentQuestion]["blVerb"])}
+                            option.value === qpData[current['section']][currentQuestion][current["subDiv"]]["blVerb"])}
                     />
                 </div>
             </div>
-            {/* <hr /> */}
             <div class="row mb-3 p-1">
-                <h5 class="col-lg-3 ms-2" align="left">Question:</h5>
+                <h5 class="col-lg-3" align="left">Question:</h5>
+
+                {current["section"] != "A" && current["subDiv"] == "ii" && <div class="d-flex flex-row-reverse p-0 col-lg-9">
+                    <span>{"(Leave sub division (ii) blank, if not needed)"}</span>
+                </div>}
                 <textarea
-                    name='question'
-                    id='question'
                     style={{ resize: "none", height: 250 }}
-                    type="text" onChange={handleQuestionChange}
+                    type="text"
+                    onChange={handleQuestionChange}
                     class="m-2 mx-3 form-control"
-                    placeholder='haha'
-                    // spellCheck="true"
-                    value={qpData[current['section']][currentQuestion]["question"]}
+                    spellCheck="true"
+                    value={qpData[current['section']][currentQuestion][current["subDiv"]]["question"]}
                 />
             </div>
             <div class="row my-3">

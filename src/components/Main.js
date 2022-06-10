@@ -25,7 +25,7 @@ function Main() {
         }}
       >
         <DataProvider>
-          <ResponsiveAppBar></ResponsiveAppBar>
+          <ResponsiveAppBar show={true}></ResponsiveAppBar>
           <div>
             <QPInputPanel />
           </div>

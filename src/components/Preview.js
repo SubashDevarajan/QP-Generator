@@ -17,13 +17,13 @@ const Preview = () => {
   const coArray = ["CO1", "CO2", "CO3", "CO4", "CO5"];
   const [co, setCo] = useState([]);
 
+  const courseCode = "XC7453";
   useEffect(() => {
-    let data = { coursecode: "XC7851" };
     const a = axios
-      .get("http://localhost:5000/api/courseoutcome")
+      .get(`http://localhost:5000/api/courseoutcome/${courseCode}`)
       .then((res) => {
         setCo(res.data.rows);
-        console.log(res.data.rows);
+        // console.log(res.data.rows);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -72,14 +72,6 @@ const Preview = () => {
                 </tr>
               );
             })}
-            {coArray.map(function (co, index) {
-              return (
-                <tr>
-                  <td>{"CO" + (index + 1)}</td>
-                  <td style={{ width: "95%" }}></td>
-                </tr>
-              );
-            })}
           </tbody>
         </table>
         <p className="bold padding_level font">BL - Bloom's Taxonomy Levels</p>
@@ -120,10 +112,10 @@ const Preview = () => {
             return (
               <tr>
                 <td className="font">{quesNum}</td>
-                <td class="center font">{curSection[quesNum]["question"]}</td>
-                <td className="bold font">{curSection[quesNum]["marks"]}</td>
-                <td className="font">{curSection[quesNum]["courseOutcome"]}</td>
-                <td className="font">{curSection[quesNum]["blLevel"]}</td>
+                <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
+                <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
+                <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
               </tr>
             );
           })}
@@ -136,7 +128,7 @@ const Preview = () => {
       <table id="fetch" class="width text_center table-bordered">
         <thead>
           <tr className="normal">
-            <th className=" font bold " style={{ width: "12%" }}>
+            <th className=" font bold " style={{ width: "16%" }}>
               Q. No
             </th>
             <th className="bold font" style={{ width: "60%" }} text>
@@ -156,57 +148,56 @@ const Preview = () => {
         <tbody>
           {Object.keys(qpData["B"]).map(function (quesNum, index) {
             let curSection = qpData["B"];
-            return (
-              <>
-                <tr>
-                  <td className="font">{quesNum}</td>
-                  <td class="center font">{curSection[quesNum]["question"]}</td>
-                  <td className="bold font">{curSection[quesNum]["marks"]}</td>
-                  <td className="font">
-                    {curSection[quesNum]["courseOutcome"]}
-                  </td>
-                  <td className="font">{curSection[quesNum]["blLevel"]}</td>
-                </tr>
-                <tr>
-                  <td colspan="5">OR</td>
-                </tr>
-              </>
-            );
+            if (curSection[quesNum]["ii"]["question"].trim() == "")
+              return (
+                <>
+                  <tr>
+                    <td className="font">{quesNum}</td>
+                    <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
+                    <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
+                  </tr>
+                  {quesNum.split(" ")[1] == "(a)" &&
+                    <tr>
+                      <td colspan="5">OR</td>
+                    </tr>}
+                  {(quesNum.split(" ")[1] == "(b)") && (quesNum != "15 (b)") &&
+                    <tr>
+                      <td colspan="5">&nbsp;</td>
+                    </tr>}
+                </>
+              )
+            else
+              return (
+                <>
+                  <tr>
+                    <td className="font">{quesNum + " (i)"}</td>
+                    <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
+                    <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
+                  </tr>
+                  <tr>
+                    <td className="font">{quesNum + " (ii)"}</td>
+                    <td class="center font">{curSection[quesNum]["ii"]["question"]}</td>
+                    <td className="bold font">{curSection[quesNum]["ii"]["marks"]}</td>
+                    <td className="font">{curSection[quesNum]["ii"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["ii"]["blLevel"]}</td>
+                  </tr>
+                  {quesNum.split(" ")[1] == "(a)" &&
+                    <tr>
+                      <td colspan="5">OR</td>
+                    </tr>}
+                  {(quesNum.split(" ")[1] == "(b)") && (quesNum != "15 (b)") &&
+                    <tr>
+                      <td colspan="5">&nbsp;</td>
+                    </tr>}
+                </>
+              )
           })}
-          {/* {Object.keys(qpData["Bb"]).map(function (quesNum, index) {
-            let curSection = qpData["Bb"]
-            return (
-              <>
-                <tr>
-                  <td>{quesNum}</td>
-                  <td class="center">{curSection[quesNum]["question"]}</td>
-                  <td>{curSection[quesNum]["marks"]}</td>
-                  <td>{curSection[quesNum]["courseOutcome"]}</td>
-                  <td>{curSection[quesNum]["blLevel"]}</td>
-                </tr>
-                <tr><td colspan="5"><br></br></td></tr>
-              </>
-            )
-          })}
-          {Object.keys(qpData["B15b"]).map(function (quesNum, index) {
-            let curSection = qpData["B15b"]
-            return (
-              <>
-                <tr>
-                  <td>{quesNum}</td>
-                  <td class="center">{curSection[quesNum]["question"]}</td>
-                  <td>{curSection[quesNum]["marks"]}</td>
-                  <td>{curSection[quesNum]["courseOutcome"]}</td>
-                  <td>{curSection[quesNum]["blLevel"]}</td>
-                </tr>
-              </>
-            )
-          })} */}
         </tbody>
       </table>
-      {/* <br></br>
-            <br></br>
-            <br></br> */}
       <br></br>
       <br></br>
       <br></br>
@@ -236,15 +227,37 @@ const Preview = () => {
         <tbody>
           {Object.keys(qpData["C"]).map(function (quesNum, index) {
             let curSection = qpData["C"];
-            return (
-              <tr>
-                <td className="font">{quesNum}</td>
-                <td class="center font">{curSection[quesNum]["question"]}</td>
-                <td className="bold font">{curSection[quesNum]["marks"]}</td>
-                <td className="font">{curSection[quesNum]["courseOutcome"]}</td>
-                <td className="font">{curSection[quesNum]["blLevel"]}</td>
-              </tr>
-            );
+            if (curSection[quesNum]["ii"]["question"].trim() == "")
+              return (
+                <>
+                  <tr>
+                    <td className="font">{quesNum}</td>
+                    <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
+                    <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
+                  </tr>
+                </>
+              )
+            else
+              return (
+                <>
+                  <tr>
+                    <td className="font">{quesNum + " (i)"}</td>
+                    <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
+                    <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
+                  </tr>
+                  <tr>
+                    <td className="font">{quesNum + " (ii)"}</td>
+                    <td class="center font">{curSection[quesNum]["ii"]["question"]}</td>
+                    <td className="bold font">{curSection[quesNum]["ii"]["marks"]}</td>
+                    <td className="font">{curSection[quesNum]["ii"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["ii"]["blLevel"]}</td>
+                  </tr>
+                </>
+              )
           })}
         </tbody>
       </table>

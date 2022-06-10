@@ -8,10 +8,6 @@ import { DataStorage } from './dataProvider';
 
 const CourseDetails = () => {
 
-  var curr = new Date();
-  curr.setDate(curr.getDate() + 3);
-  var date = curr.toISOString().substr(0, 10);
-  console.log(date);
 
   const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
   const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
@@ -23,9 +19,6 @@ const CourseDetails = () => {
     });
   }
 
-  function handleChange() {
-
-  }
 
   var departments = [{ value: "Mathematics", label: "Mathematics" }, { value: "Computer Science", label: "Computer Science" }, { value: "Information Technology", label: "Information Technology" }];
   var campus = [{ value: "College of Engineering, Guindy", label: "CEG" }, { value: "ACT", label: "ACT" }, { value: "SAP", label: "SAP" }];
@@ -51,7 +44,7 @@ const CourseDetails = () => {
       .get("http://localhost:5000/api/course")
       .then((res) => {
         setCourse(res.data.rows);
-        console.log(res.data.rows);
+        // console.log(res.data.rows);
       })
       .catch((e) => console.log(e));
   }, []);
@@ -62,20 +55,8 @@ const CourseDetails = () => {
     CourseList.push({ value: course[i]["coursecode"] + " - " + course[i]["coursename"], label: course[i]["coursecode"] + " - " + course[i]["coursename"] })
   }
 
-  console.log(CourseList)
+  // console.log(CourseList)
 
-  
-  useEffect(() => {
-    const a = axios
-      .get("http://localhost:5000/api/courseoutcome",{params: {
-        coursecode:"XC7453"
-      }})
-      .then((res) => {
-        setCourseOutcome(res.data.rows);
-        console.log(res.data.rows);
-      })
-      .catch((e) => console.log(e));
-  }, []);
 
 
   return (
