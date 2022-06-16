@@ -154,7 +154,7 @@ const Preview = () => {
                   <tr>
                     <td className="font">{quesNum}</td>
                     <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
-                    <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
+                    <td className="bold font">{13}</td>
                     <td className="font">{curSection[quesNum]["i"]["courseOutcome"].substring(2, 3)}</td>
                     <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
                   </tr>
@@ -234,7 +234,7 @@ const Preview = () => {
                   <tr>
                     <td className="font">{quesNum}</td>
                     <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
-                    <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
+                    <td className="bold font">{15}</td>
                     <td className="font">{curSection[quesNum]["i"]["courseOutcome"].substring(2, 3)}</td>
                     <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
                   </tr>

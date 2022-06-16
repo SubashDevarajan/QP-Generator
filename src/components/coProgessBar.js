@@ -30,11 +30,11 @@ const ProgressCo = () => {
 
     const coStandards =
     {
-        CO1: [0,17],
-        CO2: [0,17],
-        CO3: [0,17],
-        CO4: [0,25],
-        CO5: [0,24]
+        CO1: [0, 17],
+        CO2: [0, 17],
+        CO3: [0, 17],
+        CO4: [0, 25],
+        CO5: [0, 24]
     }
 
     var currentCoValues = {
@@ -56,10 +56,10 @@ const ProgressCo = () => {
     }
 
     var orderArray = ["CO1",
-    "CO2",
-    "CO3",
-    "CO4",
-    "CO5"]
+        "CO2",
+        "CO3",
+        "CO4",
+        "CO5"]
     for (let i in orderArray) {
         if (coStandards[orderArray[i]][0] <= currentCoValues[orderArray[i]] && coStandards[orderArray[i]][1] >= currentCoValues[orderArray[i]]) {
             colorValues[orderArray[i]] = "success"
@@ -76,41 +76,42 @@ const ProgressCo = () => {
         <div>
             <div class="row my-2">
                 <div class="col-lg-5 my-auto">
-                    <h5>{'Lower Order (L1 and L2)'}</h5>
+                    <h5>{'CO1'}</h5>
                 </div>
                 <div class="col-lg-7">
-                    {/* <ProgressBar>
-                        <ProgressBar variant="light" now={20} key={1} />
-                        <ProgressBar variant="success" now={15} key={2} />
-                        <ProgressBar variant="light" now={65} key={3} />
-                    </ProgressBar> */}
-                    <ProgressBar className='my-1' variant={colorValues["lower"]} now={currentCoValues["lower"]} />
-
+                    <ProgressBar className='my-1' variant={colorValues["CO1"]} now={currentCoValues["CO1"]} />
                 </div>
             </div>
             <div class="row my-2">
-                <div class="col-lg-5">
-                    <h5>{'Intermediate Order (L3 and L4)'}</h5>
+                <div class="col-lg-5 my-auto">
+                    <h5>{'CO2'}</h5>
                 </div>
                 <div class="col-lg-7">
-                    {/* <ProgressBar>
-                        <ProgressBar variant="light" now={40} key={1} />
-                        <ProgressBar variant="success" now={60} key={2} />
-                    </ProgressBar> */}
-                    <ProgressBar className='my-1' variant={colorValues["intermediate"]} now={currentCoValues["intermediate"]} />
+                    <ProgressBar className='my-1' variant={colorValues["CO2"]} now={currentCoValues["CO2"]} />
                 </div>
             </div>
             <div class="row my-2">
-                <div class="col-lg-5">
-                    <h5>{'Higher Order (L5 and L6)'}</h5>
+                <div class="col-lg-5 my-auto">
+                    <h5>{'CO3'}</h5>
                 </div>
                 <div class="col-lg-7">
-                    {/* <ProgressBar>
-                        <ProgressBar variant="light" now={15} key={1} />
-                        <ProgressBar variant="success" now={10} key={2} />
-                        <ProgressBar variant="light" now={75} key={3} />
-                    </ProgressBar> */}
-                    <ProgressBar className='my-1' variant={colorValues["higher"]} now={currentCoValues["higher"]} />
+                    <ProgressBar className='my-1' variant={colorValues["CO3"]} now={currentCoValues["CO3"]} />
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-lg-5 my-auto">
+                    <h5>{'CO4'}</h5>
+                </div>
+                <div class="col-lg-7">
+                    <ProgressBar className='my-1' variant={colorValues["CO4"]} now={currentCoValues["CO4"]} />
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-lg-5 my-auto">
+                    <h5>{'CO5'}</h5>
+                </div>
+                <div class="col-lg-7">
+                    <ProgressBar className='my-1' variant={colorValues["CO5"]} now={currentCoValues["CO5"]} />
                 </div>
             </div>
             <div class="row my-2">

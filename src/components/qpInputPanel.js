@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Preview from "./Preview";
 import Progress from "./progressBar";
 import ComponentToPrint from "./printFC";
+import ProgressCo from "./coProgessBar";
 
 const QPInputPanel = () => {
   const [openBl, setOpenBl] = React.useState(false);
@@ -69,7 +70,7 @@ const QPInputPanel = () => {
   const currentQuestion =
     sectionQuestions[current["section"]][current["questionIndex"]];
   return (
-    <div class="row container-fluid m-0 p-0 my-0 col-12" style={{height:"100%"}}>
+    <div class="row container-fluid m-0 p-0 my-0 col-12" style={{ height: "100%" }}>
       <div class="col-lg-9">
         <div class="m-3">
           <InputForm />
@@ -98,8 +99,12 @@ const QPInputPanel = () => {
             >
               BL Level
             </button>
-            
-            <button type="button" class="btn btn-secondary">
+
+            <button
+              type="submit"
+              data-toggle="modal"
+              data-target="#COLevelProgress"
+              class="btn btn-secondary">
               Course Outcome
             </button>
           </div>
@@ -155,6 +160,48 @@ const QPInputPanel = () => {
             </div>
             <div class="modal-body">
               <Progress />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="modal fade bd-example-modal-lg"
+        id="COLevelProgress"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="COLevelProgressTitle"
+        aria-hidden="true"
+      >
+        <div
+          class="modal-dialog modal-lg modal-dialog-centered"
+          role="document"
+        >
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="COLevelProgressTitle">
+                Course Outcome Allocation
+              </h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <ProgressCo />
             </div>
             <div class="modal-footer">
               <button

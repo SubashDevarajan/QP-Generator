@@ -69,6 +69,10 @@ export const DataProvider = ({ children }) => {
             qpDataframe[section][ques] = {}
             var subDivArr = ["i", "ii"];
             subDivArr.forEach(function (sd, i) {
+                if(sd=="ii"){
+                    qpDataframe[section][ques][sd] = { ...questionTemplate, marks: 0 };
+                    return;
+                }
                 qpDataframe[section][ques][sd] = { ...questionTemplate, marks: mark };
             })
         })

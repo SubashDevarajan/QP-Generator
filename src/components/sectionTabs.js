@@ -45,7 +45,7 @@ const SectionTab = () => {
     const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData] = useContext(DataStorage);
 
     function handleClick(sec) {
-        setCurrent(prev => ({ ...current, ...{ questionIndex: 0, section: sec } }));
+        setCurrent(prev => ({ ...current, ...{ questionIndex: 0, section: sec,subDiv: "i" } }));
         // console.log(current);
     }
     const [value, setValue] = useState(0);

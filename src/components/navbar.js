@@ -60,7 +60,7 @@ const ResponsiveAppBar = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log(props.show)
+  // console.log(props.show)
   const style = {
     position: "absolute",
     top: "50%",

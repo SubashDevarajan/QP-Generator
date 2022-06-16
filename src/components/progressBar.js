@@ -26,7 +26,7 @@ const Progress = () => {
         }
     }
 
-    console.log(currentBlMarks)
+    // console.log(currentBlMarks)
 
     const blStandards =
     {

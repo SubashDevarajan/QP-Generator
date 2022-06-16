@@ -10,6 +10,8 @@ import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 
 const InputForm = () => {
 
+
+
     const [current, setCurrent, qpInfo, setQPInfo, qpData, setQPData, sectionQuestions] = useContext(DataStorage);
     const [sds, setCurrenssdt, qpInfso, setQPInfdo, qpDataa, setQPDataa, sectionQuestionss] = useContext(DataStorage);
     const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
@@ -17,6 +19,11 @@ const InputForm = () => {
     const [bl, setBl] = useState([]);
     const [blLev, setBlLev] = useState([]);
     const [co, setCo] = useState([]);
+    const [qData, setQData] = useState({
+        user_id: "",
+        qp_info: {},
+        qp_details: {},
+    });
 
     const handleSubDiv = (event, sd) => {
         if (!sd)
@@ -28,12 +35,12 @@ const InputForm = () => {
             .get("http://localhost:5000/api/bldetails_all")
             .then((res) => {
                 setBlLev(res.data.rows);
-                console.log(res.data.rows);
+                // console.log(res.data.rows);
             })
             .catch((e) => console.log(e));
     }, []);
     const courseCode = qpInfo["subjectCodeTitle"].split(" ")[0];
-    console.log(courseCode)
+    // console.log(courseCode)
     useEffect(() => {
         const a = axios
             .get(`http://localhost:5000/api/courseoutcome/${qpInfo["subjectCodeTitle"].split(" ")[0]}`)
@@ -47,20 +54,20 @@ const InputForm = () => {
 
     var curBlLevel = qpData[current["section"]][currentQuestion][current["subDiv"]]["blLevel"];
 
-    console.log(curBlLevel)
+    // console.log(curBlLevel)
 
     useEffect(() => {
-        if(curBlLevel==""){
+        if (curBlLevel == "") {
             curBlLevel = "L0"
         }
         const a = axios
             .get(`http://localhost:5000/api/bldetails_blLevel/${curBlLevel}`)
             .then((res) => {
                 setBl(res.data.rows);
-                console.log(res.data.rows);
+                // console.log(res.data.rows);
             })
             .catch((e) => console.log(e));
-    }, [qpData,current]);
+    }, [qpData, current]);
 
 
 
@@ -68,17 +75,22 @@ const InputForm = () => {
     var BLVerbList = [];
     var BLLevelList = [];
     var COList = [];
+    var MarksList = [];
     var bllevels = [];
 
-    // var SubDivMarks = {c:}
+    var m = 15;
+    if (current["section"] == "B")
+        m = 13;
 
+    for (let i in [...Array(m).keys()]) {
+        MarksList.push({ value: parseInt(i) + 1, label: parseInt(i) + 1 })
+    }
 
     for (let i in bl) {
         BLVerbList.push({ value: bl[i]["keywords"], label: bl[i]["keywords"] });
     }
 
     for (let i in blLev) {
-
         BLLevelList.push({ value: blLev[i]["levels"], label: blLev[i]["levels"] + " - " + blLev[i]["bl_levels"] })
     }
 
@@ -90,14 +102,75 @@ const InputForm = () => {
         const questionNumbers = sectionQuestions[current["section"]];
         const currentIndex = current["questionIndex"];
         const nextIndex = (currentIndex + 1) % questionNumbers.length;
-        setCurrent({ ...current, questionIndex: nextIndex });
+        setCurrent({ ...current, questionIndex: nextIndex, subDiv: "i" });
     }
 
     function handlePrev() {
         const questionNumbers = sectionQuestions[current["section"]];
         const currentIndex = current["questionIndex"];
         const nextIndex = (currentIndex + questionNumbers.length - 1) % questionNumbers.length;
-        setCurrent({ ...current, questionIndex: nextIndex });
+        setCurrent({ ...current, questionIndex: nextIndex, subDiv: "i" });
+    }
+
+    function handleMarksChange(v, e) {
+        var curQues = qpData[current["section"]][currentQuestion][current["subDiv"]];
+        var a, b;
+
+        if (current["section"] == "B") {
+            if (current["subDiv"] == "i") {
+                a = v.value;
+                b = 13 - v.value;
+            }
+            else {
+                b = v.value;
+                a = 13 - v.value;
+            }
+            setQPData({
+                ...qpData,
+                [current["section"]]: {
+                    ...qpData[current["section"]],
+                    [currentQuestion]: {
+                        ...qpData[current["section"]][currentQuestion],
+                        ["i"]: {
+                            ...qpData[current["section"]][currentQuestion]["i"],
+                            [e.name]: a
+                        },
+                        ["ii"]: {
+                            ...qpData[current["section"]][currentQuestion]["i"],
+                            [e.name]: b
+                        }
+                    }
+                }
+            })
+        }
+        else {
+            if (current["subDiv"] == "i") {
+                a = v.value;
+                b = 15 - v.value;
+            }
+            else {
+                b = v.value;
+                a = 15 - v.value;
+            }
+            setQPData({
+                ...qpData,
+                [current["section"]]: {
+                    ...qpData[current["section"]],
+                    [currentQuestion]: {
+                        ...qpData[current["section"]][currentQuestion],
+                        ["i"]: {
+                            ...qpData[current["section"]][currentQuestion]["i"],
+                            [e.name]: a
+                        },
+                        ["ii"]: {
+                            ...qpData[current["section"]][currentQuestion]["i"],
+                            [e.name]: b
+                        }
+                    }
+                }
+            })
+        }
+
     }
 
     function handleSelectChange(v, e) {
@@ -127,7 +200,8 @@ const InputForm = () => {
                         ["ii"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"],
                             [e.name]: v.value,
-                            state: state
+                            state: state,
+                            marks: qpData[current["section"]][currentQuestion]["ii"]["marks"]
                         }
                     },
                     [currentQuestion.substring(0, 2) + " (b)"]: {
@@ -140,7 +214,8 @@ const InputForm = () => {
                         ["ii"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"],
                             [e.name]: v.value,
-                            state: state
+                            state: state,
+                            marks: qpData[current["section"]][currentQuestion]["ii"]["marks"]
                         }
                     }
                 }
@@ -160,7 +235,8 @@ const InputForm = () => {
                         ["ii"]: {
                             ...qpData[current["section"]][currentQuestion]["i"],
                             [e.name]: v.value,
-                            state: state
+                            state: state,
+                            marks: qpData[current["section"]][currentQuestion]["ii"]
                         }
                     }
                 }
@@ -168,23 +244,78 @@ const InputForm = () => {
     }
 
     function handleReset() {
-        setQPData({
-            ...qpData,
-            [current["section"]]: {
-                ...qpData[current["section"]],
-                [currentQuestion]: {
-                    ...qpData[current["section"]][currentQuestion],
-                    [current["subDiv"]]: {
-                        ...qpData[current["section"]][currentQuestion][current["subDiv"]],
-                        question: "",
-                        blVerb: "",
-                        blLevel: "",
-                        courseOutcome: "",
-                        state: 0
+        // console.log(current["section"] == "B")
+        if (current["section"] == "B")
+            setQPData({
+                ...qpData,
+                [current["section"]]: {
+                    ...qpData[current["section"]],
+                    [currentQuestion.substring(0, 2) + " (a)"]: {
+                        ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"],
+                        ["i"]: {
+                            ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"],
+                            question: "",
+                            blVerb: "",
+                            blLevel: "",
+                            courseOutcome: "",
+                            state: 0
+                        },
+                        ["ii"]: {
+                            ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["ii"],
+                            question: "",
+                            blVerb: "",
+                            blLevel: "",
+                            courseOutcome: "",
+                            state: 0
+                        }
+                    },
+                    [currentQuestion.substring(0, 2) + " (b)"]: {
+                        ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"],
+                        ["i"]: {
+                            ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"],
+                            question: "",
+                            blVerb: "",
+                            blLevel: "",
+                            courseOutcome: "",
+                            state: 0
+                        },
+                        ["ii"]: {
+                            ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["ii"],
+                            question: "",
+                            blVerb: "",
+                            blLevel: "",
+                            courseOutcome: "",
+                            state: 0
+                        }
                     }
                 }
-            }
-        });
+            })
+        else
+            setQPData({
+                ...qpData,
+                [current["section"]]: {
+                    ...qpData[current["section"]],
+                    [currentQuestion]: {
+                        ...qpData[current["section"]][currentQuestion],
+                        ["i"]: {
+                            ...qpData[current["section"]][currentQuestion]["i"],
+                            question: "",
+                            blVerb: "",
+                            blLevel: "",
+                            courseOutcome: "",
+                            state: 0
+                        },
+                        ["ii"]: {
+                            ...qpData[current["section"]][currentQuestion]["ii"],
+                            question: "",
+                            blVerb: "",
+                            blLevel: "",
+                            courseOutcome: "",
+                            state: 0
+                        }
+                    }
+                }
+            });
     }
 
 
@@ -230,16 +361,6 @@ const InputForm = () => {
         else
             modifiedQuestion = curQuestionData + " " + curQuestionBlverb.charAt(0).toLowerCase() + curQuestionBlverb.slice(1);
 
-        // setQPData({
-        //     ...qpData,
-        //     [current["section"]]: {
-        //         ...qpData[current["section"]],
-        //         [currentQuestion]: {
-        //             ...qpData[current["section"]][currentQuestion],
-        //             question: modifiedQuestion
-        //         }
-        //     }
-        // });
         setQPData({
             ...qpData,
             [current["section"]]: {
@@ -260,23 +381,46 @@ const InputForm = () => {
         <div class="container form form-control row">
             <div class="row mt-2">
                 <h5 class="ps-3 pt-2 col-lg-3" align="left">Question <span>{currentQuestion}</span> : </h5>
-                {current["section"] != "A" && <div class="d-flex flex-row-reverse p-0 col-lg-9">
+                {current["section"] != "A" && <div
+                    class="container p-0 col-lg-9"
+                // style={{ backgroundColor: "green" }}
+                >
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row d-flex flex-row">
+                                <h5 class="col-lg-9 pt-2 d-flex flex-row-reverse">Marks</h5>
+                                <div class="col-lg-3">
+                                    <Select
+                                        name='marks'
+                                        // isMulti
+                                        isSearchable
+                                        options={MarksList}
+                                        onChange={handleMarksChange}
+                                        value={MarksList.filter(option =>
+                                            option.value === qpData[current['section']][currentQuestion][current["subDiv"]]["marks"])}
+                                    />
+                                </div>
+                            </div>
+                        </div>
 
-                    <ToggleButtonGroup
-                        value={current["subDiv"]}
-                        color='success'
-                        exclusive
-                        onChange={handleSubDiv}
-                        aria-label="text alignment"
-                        size='small'
-                    >
-                        <ToggleButton value="i" onClick={handleSubDivToggler} size='small' aria-label="left aligned">
-                            <span class="text-capitalize font-weight-bold">{"Sub Division"}</span>&nbsp;<span class="text-lowercase font-weight-bold">{"(i)"}</span>
-                        </ToggleButton>
-                        <ToggleButton value="ii" onClick={handleSubDivToggler} size='small' aria-label="centered">
-                            <span class="text-capitalize font-weight-bold">{"Sub Division"}</span>&nbsp;<span class="text-lowercase font-weight-bold">{"(ii)"}</span>
-                        </ToggleButton>
-                    </ToggleButtonGroup>
+                        <div class="col-lg-4" style={{ justifyContent: "right", float: "right", display: "flex" }}>
+                            <ToggleButtonGroup
+                                value={current["subDiv"]}
+                                color='success'
+                                exclusive
+                                onChange={handleSubDiv}
+                                aria-label="text alignment"
+                                size='small'
+                            >
+                                <ToggleButton value="i" onClick={handleSubDivToggler} size='small' aria-label="left aligned">
+                                    <span class="text-capitalize font-weight-bold">{"Sub Division"}</span>&nbsp;<span class="text-lowercase font-weight-bold">{"(i)"}</span>
+                                </ToggleButton>
+                                <ToggleButton value="ii" onClick={handleSubDivToggler} size='small' aria-label="centered">
+                                    <span class="text-capitalize font-weight-bold">{"Sub Division"}</span>&nbsp;<span class="text-lowercase font-weight-bold">{"(ii)"}</span>
+                                </ToggleButton>
+                            </ToggleButtonGroup>
+                        </div>
+                    </div>
                 </div>}
                 <div class="mt-2 mb-2">
                     <Divider />
