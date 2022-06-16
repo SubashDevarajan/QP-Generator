@@ -15,6 +15,7 @@ const InputForm = () => {
     const currentQuestion = sectionQuestions[current["section"]][current["questionIndex"]];
     const [state, setState] = useState();
     const [bl, setBl] = useState([]);
+    const [blLev, setBlLev] = useState([]);
     const [co, setCo] = useState([]);
 
     const handleSubDiv = (event, sd) => {
@@ -26,8 +27,8 @@ const InputForm = () => {
         const a = axios
             .get("http://localhost:5000/api/bldetails_all")
             .then((res) => {
-                setBl(res.data.rows);
-                // console.log(res.data.rows);
+                setBlLev(res.data.rows);
+                console.log(res.data.rows);
             })
             .catch((e) => console.log(e));
     }, []);
@@ -38,10 +39,28 @@ const InputForm = () => {
             .get(`http://localhost:5000/api/courseoutcome/${qpInfo["subjectCodeTitle"].split(" ")[0]}`)
             .then((res) => {
                 setCo(res.data.rows);
-                console.log(res.data.rows);
+                // console.log(res.data.rows);
             })
             .catch((e) => console.log(e));
     }, [qpInfo]);
+
+
+    var curBlLevel = qpData[current["section"]][currentQuestion][current["subDiv"]]["blLevel"];
+
+    console.log(curBlLevel)
+
+    useEffect(() => {
+        if(curBlLevel==""){
+            curBlLevel = "L0"
+        }
+        const a = axios
+            .get(`http://localhost:5000/api/bldetails_blLevel/${curBlLevel}`)
+            .then((res) => {
+                setBl(res.data.rows);
+                console.log(res.data.rows);
+            })
+            .catch((e) => console.log(e));
+    }, [qpData,current]);
 
 
 
@@ -55,20 +74,16 @@ const InputForm = () => {
 
 
     for (let i in bl) {
-        BLVerbList.push({ value: bl[i]["keywords"], label: bl[i]["keywords"] })
-        bllevels.push(bl[i]["bl_levels"]);
+        BLVerbList.push({ value: bl[i]["keywords"], label: bl[i]["keywords"] });
     }
 
-    bllevels = [...new Set(bllevels)];
-    var v = 0;
+    for (let i in blLev) {
 
-    for (let i in bllevels) {
-        v = parseInt(i) + 1
-        BLLevelList.push({ value: "BL" + v, label: bllevels[i] })
+        BLLevelList.push({ value: blLev[i]["levels"], label: blLev[i]["levels"] + " - " + blLev[i]["bl_levels"] })
     }
 
     for (let i in co) {
-        COList.push({ value: co[i]["levels"], label: co[i]["courseoutcomes"] })
+        COList.push({ value: co[i]["levels"], label: co[i]["levels"] + " - " + co[i]["courseoutcomes"] })
     }
 
     function handleNext() {
@@ -316,7 +331,7 @@ const InputForm = () => {
                 <textarea
                     style={{ resize: "none" }}
                     type="text"
-                    rows = {10}
+                    rows={10}
                     onChange={handleQuestionChange}
                     class="m-2 mx-3 form-control"
                     spellCheck="true"

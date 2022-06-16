@@ -1,7 +1,7 @@
 table,
 th,
 td {
-  border: 2px solid black;
+  border: 2px solid black !important;
   padding: 5px;
   font-size: medium;
   font-weight: normal;
@@ -12,16 +12,16 @@ table.width {
 }
 
 table.table-bordered {
-  border: 1px solid black;
+  border: 1px solid black !important;
   margin-top: 20px;
 }
 
 table.table-bordered>thead>tr>th {
-  border: 1px solid black;
+  border: 1px solid black !important;
 }
 
 table.table-bordered>tbody>tr>td {
-  border: 1px solid black;
+  border: 1px solid black !important;
 }
 
 table {
@@ -30,13 +30,21 @@ table {
 
 tr {
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid black !important;
   /* height: 100px; */
 }
 
 .font {
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  /* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+  font-family: 'Times New Roman', Times, serif;
   font-size: 20px;
+}
+
+.font_header {
+  /* font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 30px;
+  font-weight: bolder;
 }
 
 .padding {
@@ -82,6 +90,15 @@ tr {
   float: right;
   margin-right: 15.3%;
 }
+.align_left1 {
+  float: left;
+  margin-left: 10%;
+}
+
+.align_right1 {
+  float: right;
+  margin-right: 10%;
+}
 
 .para_center {
   text-align: center;
@@ -111,7 +128,7 @@ tr {
   width: 90%;
   padding: 3px;
   text-align: left;
-  font-size: 14px;
+  font-size: 17px;
   margin-left: 85px;
   margin-top: -23px;
 }
@@ -120,7 +137,7 @@ tr {
   /* width: 90%; */
   padding: 3px;
   text-align: left;
-  font-size: 14px;
+  font-size: 17px;
   margin-left: 85px;
   margin-top: -5px;
 }

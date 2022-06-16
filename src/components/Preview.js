@@ -48,23 +48,23 @@ const Preview = () => {
       <br></br>
       <br></br>
       <div>
-        <h4 class="para_center  bold font">{qpInfo["university"]} </h4>
-        <h4 class="para_center bold font">
+        <h3 class="para_center  bold font_header">{qpInfo["university"]} </h3>
+        <h3 class="para_center bold font_header">
           {qpInfo["branch"]} {qpInfo["description"]}
-        </h4>
+        </h3>
         <p class="align_text font">{qpInfo["course"]}</p>
         <p class="align_text font">{"Semester " + qpInfo["semester"]}</p>
         <p class="align_text bold font">{qpInfo["subjectCodeTitle"]}</p>
         <p class="align_text font">({"Regulation " + qpInfo["regulation"]})</p>
-        <p class="align_left bold">{"Time: " + qpInfo["time"] + " hrs"}</p>
-        <p class="align_right bold">{"Max.Marks: " + qpInfo["marks"]}</p>
+        <p class="align_left1">{"Time: " + qpInfo["time"] + " hrs"}</p>
+        <p class="align_right1">{"Max.Marks: " + qpInfo["marks"]}</p>
         <div style={{ clear: "both" }}></div>
       </div>
       <div>
         <table id="fetch" class="width center table-bordered">
           <tbody>
             {Object.keys(COList).map(function (coc, index) {
-              // console.log(coc)
+              // console.log(COList[coc]["value"].substring(2, 3))
               return (
                 <tr>
                   <td>{COList[coc]["value"]}</td>
@@ -114,7 +114,7 @@ const Preview = () => {
                 <td className="font">{quesNum}</td>
                 <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
                 <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
-                <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                <td className="font">{curSection[quesNum]["i"]["courseOutcome"].substring(2, 3)}</td>
                 <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
               </tr>
             );
@@ -123,7 +123,7 @@ const Preview = () => {
       </table>
       <br></br>
       <div class="bold align_text font">
-        <u>PART-B (5 x 13 = 65)</u>
+        <u>PART-B (5 x 13 = 65 Marks)</u>
       </div>
       <table id="fetch" class="width text_center table-bordered">
         <thead>
@@ -155,7 +155,7 @@ const Preview = () => {
                     <td className="font">{quesNum}</td>
                     <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
                     <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
-                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"].substring(2, 3)}</td>
                     <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
                   </tr>
                   {quesNum.split(" ")[1] == "(a)" &&
@@ -175,14 +175,14 @@ const Preview = () => {
                     <td className="font">{quesNum + " (i)"}</td>
                     <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
                     <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
-                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"].substring(2, 3)}</td>
                     <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
                   </tr>
                   <tr>
                     <td className="font">{quesNum + " (ii)"}</td>
                     <td class="center font">{curSection[quesNum]["ii"]["question"]}</td>
                     <td className="bold font">{curSection[quesNum]["ii"]["marks"]}</td>
-                    <td className="font">{curSection[quesNum]["ii"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["ii"]["courseOutcome"].substring(2, 3)}</td>
                     <td className="font">{curSection[quesNum]["ii"]["blLevel"]}</td>
                   </tr>
                   {quesNum.split(" ")[1] == "(a)" &&
@@ -202,8 +202,9 @@ const Preview = () => {
       <br></br>
       <br></br>
       <div class="bold align_text  font">
-        <u>PART-C (1 x 15 = 15)</u>
+        <u>PART-C (1 x 15 = 15 Marks)</u>
       </div>
+      <p class="p_center font">(Q.No.16 is compulsory)</p>
       <table id="fetch" class="width text_center table-bordered">
         <thead>
           <tr className="normal">
@@ -234,7 +235,7 @@ const Preview = () => {
                     <td className="font">{quesNum}</td>
                     <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
                     <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
-                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"].substring(2, 3)}</td>
                     <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
                   </tr>
                 </>
@@ -246,14 +247,14 @@ const Preview = () => {
                     <td className="font">{quesNum + " (i)"}</td>
                     <td class="center font">{curSection[quesNum]["i"]["question"]}</td>
                     <td className="bold font">{curSection[quesNum]["i"]["marks"]}</td>
-                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["i"]["courseOutcome"].substring(2, 3)}</td>
                     <td className="font">{curSection[quesNum]["i"]["blLevel"]}</td>
                   </tr>
                   <tr>
                     <td className="font">{quesNum + " (ii)"}</td>
                     <td class="center font">{curSection[quesNum]["ii"]["question"]}</td>
                     <td className="bold font">{curSection[quesNum]["ii"]["marks"]}</td>
-                    <td className="font">{curSection[quesNum]["ii"]["courseOutcome"]}</td>
+                    <td className="font">{curSection[quesNum]["ii"]["courseOutcome"].substring(2, 3)}</td>
                     <td className="font">{curSection[quesNum]["ii"]["blLevel"]}</td>
                   </tr>
                 </>
