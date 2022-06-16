@@ -8,7 +8,7 @@ function Mainbody() {
     <div className="mainbody">
       <hr></hr>
       <div className="main_top"></div>
-      <div className="main_docs">
+      <div className="main_docs wrapper">
         <MediaCard /> <MediaCard />
         <MediaCard />
       </div>

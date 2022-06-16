@@ -18,15 +18,17 @@ function Main() {
   return (
     <>
       <div
-        // className="App"
-        style={{
-          // backgroundImage: `url(${background})`,
-          backgroundColor : "lightBlue"
-        }}
+      // className="App"
+      // style={{
+      //   backgroundColor : "lightBlue"
+      // }}
       >
+
         <DataProvider>
           <ResponsiveAppBar show={true}></ResponsiveAppBar>
-          <div>
+          <div
+          // style={{backgroundColor:"green",height:"700"}}
+          >
             <QPInputPanel />
           </div>
           <div class="fixed-bottom">

@@ -51,6 +51,8 @@ const InputForm = () => {
     var COList = [];
     var bllevels = [];
 
+    // var SubDivMarks = {c:}
+
 
     for (let i in bl) {
         BLVerbList.push({ value: bl[i]["keywords"], label: bl[i]["keywords"] })
@@ -312,8 +314,9 @@ const InputForm = () => {
                     <span>{"(Leave sub division (ii) blank, if not needed)"}</span>
                 </div>}
                 <textarea
-                    style={{ resize: "none", height: 250 }}
+                    style={{ resize: "none" }}
                     type="text"
+                    rows = {10}
                     onChange={handleQuestionChange}
                     class="m-2 mx-3 form-control"
                     spellCheck="true"

@@ -56,8 +56,8 @@
 }
 .card_image{
     box-sizing:border-box;
-    height:120px;
-    width:140px;
+    height:160px;
+    width:180px;
     border-radius:2px;
     border:0.5px solid #fffdf7;
     cursor: pointer;

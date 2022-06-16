@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  background-color: lightblue;
+  overflow-x: hidden;
+
 }
 
 .App-logo {
@@ -10,6 +13,12 @@
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container{
+      max-height: 100%;
   }
 }
 

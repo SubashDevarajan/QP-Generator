@@ -69,7 +69,7 @@ const QPInputPanel = () => {
   const currentQuestion =
     sectionQuestions[current["section"]][current["questionIndex"]];
   return (
-    <div class="row container mw-100">
+    <div class="row container-fluid m-0 p-0 my-0 col-12" style={{height:"100%"}}>
       <div class="col-lg-9">
         <div class="m-3">
           <InputForm />
