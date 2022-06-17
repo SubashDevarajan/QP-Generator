@@ -17,7 +17,7 @@ export const DataProvider = ({ children }) => {
         university: "ANNA UNIVERSITY (UNIVERSITY DEPARTMENTS)",
         description: "END SEMESTER EXAMINATIONS-NOV/DEC 2022",
         campus: "College Of Engineering, Guindy",
-        subjectCodeTitle: "MA1234 - Numerical Methods",
+        subjectCodeTitle: "",
         // subjectTitle: 'Numerical Methods',
         time: "3",
         // subjectCode: 'MA1234',
@@ -25,8 +25,8 @@ export const DataProvider = ({ children }) => {
         department: "Mathematics",
         date: '20/04/2022',
         marks: 100,
-        branch: 'M.Sc Integrated CS/IT',
-        semester: '8'
+        branch: '',
+        semester: ''
     })
 
     const [current, setCurrent] = useState({

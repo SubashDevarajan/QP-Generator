@@ -19,11 +19,21 @@ const InputForm = () => {
     const [bl, setBl] = useState([]);
     const [blLev, setBlLev] = useState([]);
     const [co, setCo] = useState([]);
+    var userId = localStorage.getItem("UserId");
+    console.log(userId)
     const [qData, setQData] = useState({
-        user_id: "",
+        user_id: userId,
         qp_info: {},
         qp_details: {},
     });
+    useEffect(() => {
+        const a = axios
+            .post("http://localhost:5000/api/postqp", qData)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((e) => console.log(e.response));
+    }, [qpData]);
 
     const handleSubDiv = (event, sd) => {
         if (!sd)

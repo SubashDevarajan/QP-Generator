@@ -8,7 +8,7 @@ import ResponsiveAppBar from "../components/navbar";
 function Dashboard() {
   useEffect(() => {
     const token = localStorage.getItem("AuthId");
-    console.log(token);
+    // console.log(token);
     if (token == null) {
       window.location.href = "/";
     }

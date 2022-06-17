@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SideMenu from "../admin/components/SideMenu";
 import {
   makeStyles,
@@ -8,8 +8,24 @@ import {
 } from "@material-ui/core";
 // import Header from "../admin/components/Header";
 // import PageHeader from "../admin/components/PageHeader";
-
-import Employees from "../admin/pages/Employees/Employees";
+import { Row, Col, Card } from "reactstrap";
+import CIcon from "@coreui/icons-react";
+import {
+  cilBell,
+  cilCalculator,
+  cilChartPie,
+  cilCursor,
+  cilDrop,
+  cilNotes,
+  cilPencil,
+  cilPuzzle,
+  cilSpeedometer,
+  cilStar,
+} from "@coreui/icons";
+// import CourseOutcomes from "./Course/Course";
+// import AppSidebar from "./../login/AppSidebar";
+import Example1 from "./Table1";
+import ResponsiveAppBar from "../components/navbar";
 
 const theme = createMuiTheme({
   palette: {
@@ -48,17 +64,83 @@ const useStyles = makeStyles({
 
 function Admin() {
   const classes = useStyles();
+  const [con, setCon] = useState(true);
 
   return (
-    <ThemeProvider theme={theme}>
-      <SideMenu />
-      <div className={classes.appMain}>
-        {/* <Header />  */}
-
-        <Employees />
-      </div>
-      <CssBaseline />
-    </ThemeProvider>
+    <Row style={{ overflow: "hidden" }}>
+      <Col lg={12} xl={12}>
+        <ResponsiveAppBar />
+      </Col>
+      <Col
+        lg={2}
+        style={{
+          backgroundColor: "#3c4b64",
+          height: "100%",
+          minHeight: "1000px",
+        }}
+      >
+        <Row>
+          <Col
+            lg={12}
+            xl={12}
+            style={{ paddingTop: "20px", cursor: "pointer" }}
+            onClick={() => setCon(true)}
+          >
+            <span style={{ backgroundColor: "#3c4b64", color: "#fff" }}>
+              <Row style={{ padding: "7px" }}>
+                <Col lg={3}>
+                  <CIcon
+                    icon={cilPencil}
+                    customClassName="nav-icon"
+                    height={25}
+                    width={25}
+                  />
+                </Col>
+                <Col lg={9} style={{ display: "flex", fontSize: "20px" }}>
+                  Course
+                </Col>
+              </Row>
+            </span>
+          </Col>
+          <Col
+            lg={12}
+            xl={12}
+            style={{ paddingTop: "20px", cursor: "pointer" }}
+            onClick={() => setCon(false)}
+          >
+            <span style={{ backgroundColor: "#3c4b64", color: "#fff" }}>
+              <Row style={{ padding: "7px" }}>
+                <Col lg={3}>
+                  <CIcon
+                    icon={cilPencil}
+                    customClassName="nav-icon"
+                    height={25}
+                    width={25}
+                  />
+                </Col>
+                <Col lg={9} style={{ display: "flex", fontSize: "20px" }}>
+                  Course Outcome
+                </Col>
+              </Row>
+            </span>
+          </Col>
+        </Row>
+      </Col>
+      <Col lg={10}>
+        <div>
+          {con == true && <Example1 />}
+          {con == false && <h1>qqqqqq</h1>}
+        </div>
+      </Col>
+    </Row>
+    // <AppSidebar />
+    // <ThemeProvider theme={theme}>
+    //   <AppSidebar />
+    //   <div className={classes.appMain}>
+    //     <CourseOutcomes />
+    //   </div>
+    //   <CssBaseline />
+    // </ThemeProvider>
   );
 }
 

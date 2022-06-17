@@ -17,10 +17,10 @@ const Preview = () => {
   const coArray = ["CO1", "CO2", "CO3", "CO4", "CO5"];
   const [co, setCo] = useState([]);
 
-  const courseCode = "XC7453";
+  // const courseCode = "XC7453";     
   useEffect(() => {
     const a = axios
-      .get(`http://localhost:5000/api/courseoutcome/${courseCode}`)
+      .get(`http://localhost:5000/api/courseoutcome/${qpInfo["subjectCodeTitle"].split(" ")[0]}`)
       .then((res) => {
         setCo(res.data.rows);
         // console.log(res.data.rows);
