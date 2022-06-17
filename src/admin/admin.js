@@ -24,8 +24,9 @@ import {
 } from "@coreui/icons";
 // import CourseOutcomes from "./Course/Course";
 // import AppSidebar from "./../login/AppSidebar";
-import Example1 from "./Table1";
+import CourseEdit from "./CourseEdit";
 import ResponsiveAppBar from "../components/navbar";
+import CourseOutcomeEdit from "./CourseOutcomeEdit";
 
 const theme = createMuiTheme({
   palette: {
@@ -128,8 +129,8 @@ function Admin() {
       </Col>
       <Col lg={10}>
         <div>
-          {con == true && <Example1 />}
-          {con == false && <h1>qqqqqq</h1>}
+          {con == true && <CourseEdit />}
+          {con == false && <CourseOutcomeEdit />}
         </div>
       </Col>
     </Row>

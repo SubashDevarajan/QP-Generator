@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import ListPage from "./../components/ListPage";
+import ListPage from "../components/ListPage";
 // import { Row, Col } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import Select from 'react-select';
@@ -29,7 +29,7 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 
-class Example1 extends Component {
+class CourseEdit extends Component {
   state = {
     formdata: { coursecode: "", coursename: "" },
     viewModal: false,
@@ -200,7 +200,7 @@ class Example1 extends Component {
             // style={{ display: "flex", float: "right" }}
             >
               <div class="col-lg-3 p-1" align="right">
-                <Label>Course Code --></Label>
+                <Label>Course Code</Label>
               </div>
               <div class="col-lg-9">
                 <Select
@@ -335,4 +335,4 @@ class Example1 extends Component {
   }
 }
 
-export default Example1;
+export default CourseEdit;

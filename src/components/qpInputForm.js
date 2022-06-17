@@ -20,15 +20,16 @@ const InputForm = () => {
     const [blLev, setBlLev] = useState([]);
     const [co, setCo] = useState([]);
     var userId = localStorage.getItem("UserId");
-    console.log(userId)
+    var qpId = localStorage.getItem("QpId");
+    // console.log(userId)
     const [qData, setQData] = useState({
         user_id: userId,
         qp_info: {},
         qp_details: {},
     });
     useEffect(() => {
-        const a = axios
-            .post("http://localhost:5000/api/postqp", qData)
+        axios
+            .post(`http://localhost:5000/api/putqp/${qpId}`, qData)
             .then((res) => {
                 console.log(res);
             })
@@ -41,7 +42,7 @@ const InputForm = () => {
         setCurrent({ ...current, subDiv: sd });
     };
     useEffect(() => {
-        const a = axios
+        axios
             .get("http://localhost:5000/api/bldetails_all")
             .then((res) => {
                 setBlLev(res.data.rows);
@@ -52,7 +53,7 @@ const InputForm = () => {
     const courseCode = qpInfo["subjectCodeTitle"].split(" ")[0];
     // console.log(courseCode)
     useEffect(() => {
-        const a = axios
+        axios
             .get(`http://localhost:5000/api/courseoutcome/${qpInfo["subjectCodeTitle"].split(" ")[0]}`)
             .then((res) => {
                 setCo(res.data.rows);
@@ -70,7 +71,7 @@ const InputForm = () => {
         if (curBlLevel == "") {
             curBlLevel = "L0"
         }
-        const a = axios
+        axios
             .get(`http://localhost:5000/api/bldetails_blLevel/${curBlLevel}`)
             .then((res) => {
                 setBl(res.data.rows);
