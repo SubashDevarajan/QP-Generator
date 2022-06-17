@@ -64,12 +64,11 @@ const CourseDetails = () => {
     <div>
       <h2 class="d-flex justify-content-center"> Course Details </h2>
       <div class="row">
-        <div class="row my-3">
+        {/* <div class="row my-3">
           <h5 class="col-lg-3 p-1">Campus</h5>
           <div class="col-lg-9">
             <Select
               name='campus'
-              // isMulti
               isSearchable
               options={campus}
               onChange={handleSelectChange}
@@ -77,13 +76,12 @@ const CourseDetails = () => {
                 option.value === qpInfo["campus"])}
             />
           </div>
-        </div>
-        <div class="row my-3">
+        </div> */}
+        {/* <div class="row my-3">
           <h5 class="col-lg-3 p-1">Department</h5>
           <div class="col-lg-9">
             <Select
               name='department'
-              // isMulti
               isSearchable
               options={departments}
               onChange={handleSelectChange}
@@ -91,7 +89,7 @@ const CourseDetails = () => {
                 option.value === qpInfo["department"])}
             />
           </div>
-        </div>
+        </div> */}
         <div class="row my-3">
           <h5 class="col-lg-3 p-1">Branch</h5>
           <div class="col-lg-9">

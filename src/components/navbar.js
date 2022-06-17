@@ -57,7 +57,7 @@ const ResponsiveAppBar = (props) => {
       .catch((e) => console.log(e));
   }, []);
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(props.show);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   // console.log(props.show)
