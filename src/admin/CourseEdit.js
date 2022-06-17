@@ -33,6 +33,7 @@ class CourseEdit extends Component {
   state = {
     formdata: { coursecode: "", coursename: "" },
     viewModal: false,
+    viewAddModal : false,
     columns: [
       {
         name: "Course Code",
@@ -72,9 +73,9 @@ class CourseEdit extends Component {
     ],
     Data: [
     ],
-    filteredData : [],
-    filterData : false,
-    COList : [],
+    filteredData: [],
+    filterData: false,
+    COList: [],
     isLoading: false,
   };
 
@@ -83,20 +84,22 @@ class CourseEdit extends Component {
   }
 
   handleSelectChange = (v) => {
-    let a = this.state.Data.filter(x=>v?.value===x.coursecode);
-    this.setState({filteredData:a,filterData:true})
+    let a = this.state.Data.filter(x => v?.value === x.coursecode);
+    this.setState({ filteredData: a, filterData: true })
   }
 
   getData = () => {
     axios
       .get("http://localhost:5000/api/course")
       .then((res) => {
-        this.setState({ Data: res.data.rows,COList: res.data?.rows.map(
-          function (a) {
-            return { label: a.coursename, value: a.coursecode }
-          }
-        ) });
-        
+        this.setState({
+          Data: res.data.rows, COList: res.data?.rows.map(
+            function (a) {
+              return { label: a.coursename, value: a.coursecode }
+            }
+          )
+        });
+
       })
       .catch((e) => console.log(e));
   };
@@ -153,9 +156,19 @@ class CourseEdit extends Component {
   handleSubmit = (values) => {
     console.log(values);
   };
+
+  handleAddSubmit = (values) => {
+    console.log(values);
+  };
+
   toggleManageModal = () => {
     this.setState({
       viewModal: !this.state.viewModal,
+    });
+  };
+  toggleAddModal = () => {
+    this.setState({
+      viewAddModal: !this.state.viewAddModal,
     });
   };
 
@@ -194,50 +207,53 @@ class CourseEdit extends Component {
               <Breadcrumb.Item active>Data</Breadcrumb.Item>
             </Breadcrumb>
           </Col> */}
-          <Col lg="6" style={{ }}>
+          <Col lg="12" style={{}}>
             <div
               class="row"
             // style={{ display: "flex", float: "right" }}
             >
-              <div class="col-lg-3 p-1" align="right">
-                <Label>Course Code</Label>
+              <div class="col-lg-6 row container">
+                <div class="col-lg-3 p-1" align="center">
+                  <Label>Search Course</Label>
+                </div>
+                <div class="col-lg-9" align="left">
+                  <div class="col-lg-8">
+                    <Select
+                      name='courseOutcome'
+                      // isMulti
+                      isClearable
+                      isSearchable
+                      options={this.state.COList}
+                      onChange={(entity, action) => {
+                        if (action.action === "clear") {
+
+                          this.setState({ filterData: false })
+                        }
+                        else {
+                          this.handleSelectChange(entity)
+                        }
+                      }}
+                    />
+                  </div>
+
+                </div>
               </div>
-              <div class="col-lg-9">
-                <Select
-                  name='courseOutcome'
-                  // isMulti
-                  isClearable
-                  isSearchable
-                  options={this.state.COList}
-                  onChange={(entity, action) => {
-                    if (action.action === "clear") {
-                      
-                      this.setState({filterData:false})
-                    } 
-                    else {
-                      this.handleSelectChange(entity)
-                    }
-                  }}
-                />
+
+              <div class="col-lg-6">
+                <div class="d-flex flex-row-reverse">
+                  <button class="mx-4 btn btn-primary" onClick={this.toggleAddModal} type="button">Add New Course</button>
+                </div>
               </div>
             </div>
-            {/* <Row>
-              <Col lg={6} style={{ display: "flex", float: "right" }}>
-                <Label>Course Code</Label>
-              </Col>
-              <Col lg={6}>
-                <Input type="text" />
-              </Col>
-            </Row> */}
           </Col>
-        </Col>
-        <Col style={{ paddingRight: "30px", paddingLeft: "5px",overflowY:"scroll" }}>
+        </Col >
+        <Col style={{ paddingRight: "30px", paddingLeft: "5px", overflowY: "scroll" }}>
           <ListPage
             conditionalRowStyles={conditionalRowStyles}
             columns={this.state.columns}
-            data={this.state.filterData?this.state.filteredData:this.state.Data}
-            pagination = {true}
-            paginationPerPage = {10}
+            data={this.state.filterData ? this.state.filteredData : this.state.Data}
+            // pagination = {true}
+            // paginationPerPage = {10}
             // keyField={this.state.keyField}
             // totalCount={this.state.totalCount}
             // rowClicked={this.HandleRowClicked}
@@ -317,7 +333,7 @@ class CourseEdit extends Component {
                           <button
                             type="button"
                             className="btn btn-outline-danger"
-                          // onClick={() => this.toggleManageModal()}
+                          onClick={() => this.toggleManageModal()}
                           >
                             Cancel
                           </button>
@@ -330,7 +346,90 @@ class CourseEdit extends Component {
             )}
           </Formik>
         </Modal>
-      </Row>
+
+        <Modal
+          isOpen={this.state.viewAddModal}
+          toggle={this.toggleAddModal}
+          size="md"
+        >
+          <ModalHeader toggle={this.toggleAddModal}>
+            {"Create User"}
+          </ModalHeader>
+          <br />
+
+          <Formik
+            initialValues={{ coursecode: "", coursename: "" }}
+            // validationSchema={ComplaintsValidation}
+            onSubmit={this.handleAddSubmit}
+            validateOnBlur={false}
+            validateOnChange={false}
+          >
+            {({ errors, values, setFieldValue }) => (
+              <Form className="av-tooltip tooltip-label-bottom">
+                <ModalBody>
+                  <Fragment>
+                    <Row>
+                      <Col lg="12" sm="12" md="12">
+                        <FormGroup className="form-group has-float-label">
+                          <Label className="requiredField">
+                            {"Course Code"}
+                          </Label>
+                          <Field
+                            className="form-control"
+                            name="coursecode"
+                            type="text"
+                          // disabled={true}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="12" sm="12" md="12">
+                        <FormGroup className="form-group has-float-label">
+                          <Label className="requiredField">
+                            {"Course Name"}
+                          </Label>
+                          <Field
+                            className="form-control"
+                            name="coursename"
+                            type="text"
+                          // disabled={true}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </Fragment>
+                </ModalBody>
+                <ModalFooter>
+                  <div className="float-sm-right ">
+                    <Row>
+                      <FormGroup className="float-sm-right ">
+                        <div
+                          className="btn-group mr-2 btn-group-justified"
+                          role="group"
+                          aria-label="First group"
+                        >
+                          <button
+                            type="submit"
+                            className="btn btn-outline-success"
+                          >
+                            Add
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-outline-danger"
+                          onClick={() => this.toggleAddModal()}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </FormGroup>
+                    </Row>
+                  </div>
+                </ModalFooter>
+              </Form>
+            )}
+          </Formik>
+        </Modal>
+      </Row >
     );
   }
 }

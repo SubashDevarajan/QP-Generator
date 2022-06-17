@@ -38,6 +38,7 @@ class CourseOutcomeEdit extends Component {
                 name: "CO No.",
                 selector: "levels",
                 sortable: true,
+                width: "100px",
                 cell: (row) => <div>{row?.levels}</div>,
             },
             {
@@ -50,6 +51,7 @@ class CourseOutcomeEdit extends Component {
                 name: "Action",
                 selector: "action",
                 sortable: false,
+                width: "100px",
                 cell: (row) => (
                     <Row>
                         <Col>
@@ -85,7 +87,8 @@ class CourseOutcomeEdit extends Component {
         axios
             .get("http://localhost:5000/api/course")
             .then((res) => {
-                this.setState({COList: res.data?.rows.map(
+                this.setState({
+                    COList: res.data?.rows.map(
                         function (a) {
                             return { label: a.coursename, value: a.coursecode }
                         }
@@ -291,7 +294,7 @@ class CourseOutcomeEdit extends Component {
                                                         className="form-control"
                                                         name="levels"
                                                         type="text"
-                                                    // disabled={true}
+                                                        disabled={true}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -329,7 +332,7 @@ class CourseOutcomeEdit extends Component {
                                                     <button
                                                         type="button"
                                                         className="btn btn-outline-danger"
-                                                    // onClick={() => this.toggleManageModal()}
+                                                    onClick={() => this.toggleManageModal()}
                                                     >
                                                         Cancel
                                                     </button>

@@ -56,6 +56,8 @@ class ListPage extends Component {
             // keyField={this.props.keyField}
             highlightOnHover={true}
             pagination
+            paginationPerPage={5}
+            paginationRowsPerPageOptions={[3,4,5,6]}
             // noHeader
             // onSort={this.props.onSort}
             // onRowClicked={this.props.rowClicked}
