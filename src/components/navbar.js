@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import { Modal } from "@mui/material";
@@ -7,6 +7,7 @@ import Badge from "@mui/material/Badge";
 import axios from "axios";
 import { makeStyles } from "@mui/material";
 import CourseDetails from "./courseDetails";
+import swal from "sweetalert";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -60,6 +61,27 @@ const ResponsiveAppBar = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleOpenUserMenu = () => {
+    swal({
+      title: "Are you sure want to log out?",
+      text: "Once Log out , your session expired!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal("Logout successful!", {
+          icon: "success",
+        });
+        localStorage.clear();
+        window.location.href = "/";
+      } else {
+        swal("Your work is safe!");
+      }
+    });
+  };
+
   // console.log(props.show)
   const style = {
     position: "absolute",
@@ -106,13 +128,15 @@ const ResponsiveAppBar = (props) => {
             </li>
           </ul>
           <form class="d-flex">
-            <StyledBadge
-              overlap="circular"
-              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              variant="dot"
-            >
-              <Avatar alt="Jackson Durai" src="/static/images/avatar/1.jpg" />
-            </StyledBadge>
+            <IconButton onClick={handleOpenUserMenu}>
+              <StyledBadge
+                overlap="circular"
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                variant="dot"
+              >
+                <Avatar alt="Jackson Durai" src="/static/images/avatar/1.jpg" />
+              </StyledBadge>
+            </IconButton>
           </form>
           <Modal
             open={open}

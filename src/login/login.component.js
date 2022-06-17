@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./login.css";
 
@@ -6,6 +6,10 @@ const Login = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
+  });
+
+  useEffect(() => {
+    console.log(data);
   });
 
   const [error, setError] = useState(false);
@@ -48,6 +52,7 @@ const Login = () => {
                   className="form-control"
                   placeholder="Enter email"
                   onChange={(e) => setData({ ...data, email: e.target.value })}
+                  autoComplete="off"
                 />
               </div>
 
