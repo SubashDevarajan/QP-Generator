@@ -1,10 +1,23 @@
 import React, { createContext, useState } from 'react'
+import { useEffect} from "react";
+import axios from "axios";
 
 export const DataStorage = createContext()
 
 
 
 export const DataProvider = ({ children }) => {
+
+    const [qp, setQp] = useState([]);
+    useEffect(() => {
+        axios
+            .get(`http://localhost:5000/api/qpid/${localStorage.getItem("QpId")}}`)
+            .then((res) => {
+                setQp(res.data.rows);
+                console.log(res.data.rows);
+            })
+            .catch((e) => console.log(e.response));
+    }, []);
 
     const sectionQuestions = {
         A: [...Array(11).keys()].slice(1),
@@ -28,6 +41,8 @@ export const DataProvider = ({ children }) => {
         branch: '',
         semester: ''
     })
+
+
 
     const [current, setCurrent] = useState({
         questionIndex: 0,
@@ -69,7 +84,7 @@ export const DataProvider = ({ children }) => {
             qpDataframe[section][ques] = {}
             var subDivArr = ["i", "ii"];
             subDivArr.forEach(function (sd, i) {
-                if(sd=="ii"){
+                if (sd == "ii") {
                     qpDataframe[section][ques][sd] = { ...questionTemplate, marks: 0 };
                     return;
                 }

@@ -21,7 +21,7 @@ const InputForm = () => {
     const [co, setCo] = useState([]);
     var userId = localStorage.getItem("UserId");
     var qpId = localStorage.getItem("QpId");
-    // console.log(userId)
+    console.log(qpId)
     const [qData, setQData] = useState({
         user_id: userId,
         qp_info: {},
@@ -29,7 +29,7 @@ const InputForm = () => {
     });
     useEffect(() => {
         axios
-            .post(`http://localhost:5000/api/putqp/${qpId}`, qData)
+            .post(`http://localhost:5000/api/putqp/`, {qp_info:qpInfo,qp_details:qpData,id:qpId})
             .then((res) => {
                 console.log(res);
             })

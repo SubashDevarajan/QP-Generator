@@ -53,22 +53,14 @@ class CourseOutcomeEdit extends Component {
                 sortable: false,
                 width: "100px",
                 cell: (row) => (
-                    <Row>
-                        <Col>
+                    // <Row>
+                        <div>
                             <span onClick={() => this.edit(row)}>
                                 {" "}
                                 <i className="fas fas fa-edit text-success" />
-                                {/* <i className="fas fa-pencil-alt text-success mr-1" /> */}
                             </span>
-                        </Col>
-                        <Col>
-                            <span onClick={() => this.ale(row.levels)}>
-                                {" "}
-                                <i className="fas fa-trash-alt text-danger mr-1" />
-                                {/* <i className="fas fa-pencil-alt text-success mr-1" /> */}
-                            </span>
-                        </Col>
-                    </Row>
+                        </div>
+                    // </Row>
                 ),
             },
         ],
@@ -166,7 +158,15 @@ class CourseOutcomeEdit extends Component {
     };
 
     handleSubmit = (values) => {
-        console.log(values);
+        axios
+            .post(`http://localhost:5000/api/updateCourseOutcome/`, values)
+            .then((res) => {
+                this.getCOData(values["coursecode"]);
+                console.log(res);
+            })
+            .catch((e) => console.log(e.response));
+        // this.getCOData();
+        this.toggleManageModal();
     };
     toggleManageModal = () => {
         this.setState({
@@ -332,7 +332,7 @@ class CourseOutcomeEdit extends Component {
                                                     <button
                                                         type="button"
                                                         className="btn btn-outline-danger"
-                                                    onClick={() => this.toggleManageModal()}
+                                                        onClick={() => this.toggleManageModal()}
                                                     >
                                                         Cancel
                                                     </button>

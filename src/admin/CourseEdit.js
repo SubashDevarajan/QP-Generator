@@ -33,7 +33,7 @@ class CourseEdit extends Component {
   state = {
     formdata: { coursecode: "", coursename: "" },
     viewModal: false,
-    viewAddModal : false,
+    viewAddModal: false,
     columns: [
       {
         name: "Course Code",
@@ -125,8 +125,26 @@ class CourseEdit extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          alert(a);
-          // swalWithBootstrapButtons.fire('Deleted!', 'Your file has been deleted.', 'success')
+          var delObj = { coursecode: a }
+          console.log(delObj)
+          // let headers = {
+          //   'Content-Type': 'application/json;charset=UTF-8',
+          //   'Authorization': `JWT ${localStorage.getItem("AuthId")}`
+          // };
+
+          var headers = {
+            'Content-Type' : 'application/json',
+            'Accept' : 'application/json',
+            'authorization' : `${localStorage.getItem("AuthId")}`
+          }
+          axios
+            .get(`http://localhost:5000/api/coursedelete/`, delObj)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((e) => console.log(e.response));
+          // this.getData();
+          // this.handleSelectChange({});
           this.successalt("success", "SuccessFully Deleted");
         } else if (
           /* Read more about handling dismissals below */
@@ -158,7 +176,13 @@ class CourseEdit extends Component {
   };
 
   handleAddSubmit = (values) => {
-    console.log(values);
+    axios
+      .post(`http://localhost:5000/api/coursepost/`, values)
+      .then((res) => {
+        this.getData();
+      })
+      .catch((e) => console.log(e.response));
+    this.toggleAddModal();
   };
 
   toggleManageModal = () => {
@@ -195,22 +219,10 @@ class CourseEdit extends Component {
     ];
     return (
       <Row>
-        {/* style={{ paddingRight: "20px", paddingTop: "20px" }}  */}
-
         <Col lg={12} style={{ paddingTop: "20px", paddingLeft: "30px" }}>
-          {/* <Col lg="4">
-            <Breadcrumb>
-              <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-              <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
-                Library
-              </Breadcrumb.Item>
-              <Breadcrumb.Item active>Data</Breadcrumb.Item>
-            </Breadcrumb>
-          </Col> */}
           <Col lg="12" style={{}}>
             <div
               class="row"
-            // style={{ display: "flex", float: "right" }}
             >
               <div class="col-lg-6 row container">
                 <div class="col-lg-3 p-1" align="center">
@@ -220,7 +232,6 @@ class CourseEdit extends Component {
                   <div class="col-lg-8">
                     <Select
                       name='courseOutcome'
-                      // isMulti
                       isClearable
                       isSearchable
                       options={this.state.COList}
@@ -252,14 +263,6 @@ class CourseEdit extends Component {
             conditionalRowStyles={conditionalRowStyles}
             columns={this.state.columns}
             data={this.state.filterData ? this.state.filteredData : this.state.Data}
-            // pagination = {true}
-            // paginationPerPage = {10}
-            // keyField={this.state.keyField}
-            // totalCount={this.state.totalCount}
-            // rowClicked={this.HandleRowClicked}
-            // onSort={this.handleSort}
-            // rowsPerPageOnChange={this.handlePerRowsChange}
-            // pageChange={this.handlePageChange}
             isDataLoading={this.state.isLoading}
             overFlowXRemoval={false}
           />
@@ -276,7 +279,6 @@ class CourseEdit extends Component {
 
           <Formik
             initialValues={initialValues}
-            // validationSchema={ComplaintsValidation}
             onSubmit={this.handleSubmit}
             validateOnBlur={false}
             validateOnChange={false}
@@ -333,7 +335,7 @@ class CourseEdit extends Component {
                           <button
                             type="button"
                             className="btn btn-outline-danger"
-                          onClick={() => this.toggleManageModal()}
+                            onClick={() => this.toggleManageModal()}
                           >
                             Cancel
                           </button>
@@ -416,7 +418,7 @@ class CourseEdit extends Component {
                           <button
                             type="button"
                             className="btn btn-outline-danger"
-                          onClick={() => this.toggleAddModal()}
+                            onClick={() => this.toggleAddModal()}
                           >
                             Cancel
                           </button>
