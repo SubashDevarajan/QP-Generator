@@ -137,9 +137,10 @@ class CourseEdit extends Component {
             .then((res) => {
               this.getData();
               this.handleSelectChange("",false);
+              this.successalt("success", "SuccessFully Deleted");
             })
             .catch((e) => console.log(e.response));
-          this.successalt("success", "SuccessFully Deleted");
+          
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel

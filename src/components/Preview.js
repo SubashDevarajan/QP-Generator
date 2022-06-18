@@ -26,7 +26,7 @@ const Preview = () => {
         // console.log(res.data.rows);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [qpInfo]);
 
   var COList = [];
 
@@ -68,7 +68,7 @@ const Preview = () => {
               return (
                 <tr>
                   <td>{COList[coc]["value"]}</td>
-                  <td style={{ width: "100%" }}>{COList[coc]["label"]}</td>
+                  <td style={{ width: "100%",textAlign:"left" }}>{COList[coc]["label"]}</td>
                 </tr>
               );
             })}

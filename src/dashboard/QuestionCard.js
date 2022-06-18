@@ -1,4 +1,5 @@
-import * as React from "react";
+// import * as React from "react";
+import React,{useEffect,useState} from 'react'
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,12 +11,26 @@ import axios from "axios";
 import pdfFile from "../dashboard/XC5551 - Software Engineering.pdf";
 
 export default function MediaCard(props) {
+  const [qp, setQp] = useState([]);
   function print() {
     localStorage.setItem("QpId", props.qpId);
     // console.log(props);
     window.location.href = "/input-form";
     // window.open(pdfFile, "PRINT", "height=800,width=700");
   }
+  useEffect(() => { 
+    getAll()
+    
+  },[]);
+ const getAll=()=>{
+    axios
+      .get(`http://localhost:5000/api/qp/${localStorage.getItem("UserId")}`)
+      .then((res) => {
+        setQp(res.data.rows);
+        console.log(res.data.rows);
+      })
+      .catch((e) => console.log(e.response));
+    }
 
   function handleDelete() {
     console.log(props);

@@ -301,7 +301,7 @@ class CourseOutcomeEdit extends Component {
                                             <Col lg="12" sm="12" md="12">
                                                 <FormGroup className="form-group has-float-label">
                                                     <Label className="requiredField">
-                                                        {"Course Name"}
+                                                        {"Course Outcome"}
                                                     </Label>
                                                     <Field
                                                         className="form-control"

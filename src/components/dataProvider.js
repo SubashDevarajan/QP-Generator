@@ -8,17 +8,6 @@ export const DataStorage = createContext()
 
 export const DataProvider = ({ children }) => {
 
-    const [qp, setQp] = useState([]);
-    useEffect(() => {
-        axios
-            .get(`http://localhost:5000/api/qpid/${localStorage.getItem("QpId")}}`)
-            .then((res) => {
-                setQp(res.data.rows);
-                console.log(res.data.rows);
-            })
-            .catch((e) => console.log(e.response));
-    }, []);
-
     const sectionQuestions = {
         A: [...Array(11).keys()].slice(1),
         // B: ['11 (a) (i)','11 (b) (ii)','12 (a) (i)','12 (b) (ii)','13 (a) (i)','13 (b) (ii)','14 (a) (i)','14 (b) (ii)','15 (a) (i)','15 (b) (ii)'],

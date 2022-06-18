@@ -27,14 +27,27 @@ const InputForm = () => {
         qp_info: {},
         qp_details: {},
     });
+
+    const [qp, setQp] = useState([]);
     useEffect(() => {
         axios
-            .post(`http://localhost:5000/api/putqp/`, {qp_info:{},qp_details:{},id:qpId})
+            .get(`http://localhost:5000/api/qpid/${localStorage.getItem("QpId")}`)
+            .then((res) => {
+                setQPInfo(res.data.rows[0].qp_info);
+                setQPData(res.data.rows[0].qp_details);
+                // console.log(res.data.rows[0].qp_info);
+            })
+            .catch((e) => console.log(e.response));
+    }, []);
+
+    useEffect(() => {
+        axios
+            .put(`http://localhost:5000/api/putqp/`, {qp_info:qpInfo,qp_details:qpData,id:qpId})
             .then((res) => {
                 console.log(res);
             })
             .catch((e) => console.log(e.response));
-    }, [qpData]);
+    }, [qpData,qpInfo]);
 
     const handleSubDiv = (event, sd) => {
         if (!sd)
