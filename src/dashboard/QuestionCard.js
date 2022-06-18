@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import img from "../dashboard/thumbnail.png";
+import axios from "axios";
 import pdfFile from "../dashboard/XC5551 - Software Engineering.pdf";
 
 export default function MediaCard(props) {
@@ -18,6 +19,12 @@ export default function MediaCard(props) {
 
   function handleDelete() {
     console.log(props);
+    axios
+      .delete(`http://localhost:5000/api/qpdelete/${props.qpId}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.log(e.response));
   }
 
   return (
@@ -32,18 +39,6 @@ export default function MediaCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        {/* <div class="row">
-          <div class="col-lg-6 d-flex flex-row">
-            <Button size="small" onClick={print}>
-              View
-            </Button>
-          </div>
-          <div class="col-lg-6 d-flex flex-row-reverse" align="left">
-            <Button size="small" onClick={print}>
-              Delete
-            </Button>
-          </div>
-        </div> */}
         <Button size="small" onClick={print}>
           View
         </Button>

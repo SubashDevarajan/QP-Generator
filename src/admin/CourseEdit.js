@@ -83,9 +83,9 @@ class CourseEdit extends Component {
     this.getData();
   }
 
-  handleSelectChange = (v) => {
+  handleSelectChange = (v,t) => {
     let a = this.state.Data.filter(x => v?.value === x.coursecode);
-    this.setState({ filteredData: a, filterData: true })
+    this.setState({ filteredData: a, filterData: t })
   }
 
   getData = () => {
@@ -125,26 +125,20 @@ class CourseEdit extends Component {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          var delObj = { coursecode: a }
+          var delObj = { id: a }
           console.log(delObj)
           // let headers = {
           //   'Content-Type': 'application/json;charset=UTF-8',
           //   'Authorization': `JWT ${localStorage.getItem("AuthId")}`
           // };
 
-          var headers = {
-            'Content-Type' : 'application/json',
-            'Accept' : 'application/json',
-            'authorization' : `${localStorage.getItem("AuthId")}`
-          }
           axios
-            .get(`http://localhost:5000/api/coursedelete/`, delObj)
+            .delete(`http://localhost:5000/api/coursedelete/${a}`)
             .then((res) => {
-              console.log(res);
+              this.getData();
+              this.handleSelectChange("",false);
             })
             .catch((e) => console.log(e.response));
-          // this.getData();
-          // this.handleSelectChange({});
           this.successalt("success", "SuccessFully Deleted");
         } else if (
           /* Read more about handling dismissals below */
@@ -156,7 +150,7 @@ class CourseEdit extends Component {
   };
 
   edit = (val) => {
-    console.log(val);
+    // console.log(val);
     this.setState({ formdata: val });
     this.toggleManageModal();
   };
@@ -172,16 +166,35 @@ class CourseEdit extends Component {
   };
 
   handleSubmit = (values) => {
-    console.log(values);
+    axios
+      .put(`http://localhost:5000/api/courseput/`, values)
+      .then((res) => {
+        this.successalt("success", "Successfully updated");
+        this.getData();
+        this.handleSelectChange("",false);
+      })
+      .catch((e) => console.log(e.response));
+    this.toggleManageModal();
   };
 
   handleAddSubmit = (values) => {
-    axios
+    // try {
+      axios
       .post(`http://localhost:5000/api/coursepost/`, values)
       .then((res) => {
+        this.successalt("success", "Successfully added");
         this.getData();
       })
-      .catch((e) => console.log(e.response));
+      // .catch((e) => console.log(e.response));
+    // } catch (error) {
+    //   alert("Course with this course code already exists");
+    // }
+    // axios
+    //   .post(`http://localhost:5000/api/coursepost/`, values)
+    //   .then((res) => {
+    //     this.getData();
+    //   })
+    //   .catch((e) => console.log(e.response));
     this.toggleAddModal();
   };
 
@@ -241,7 +254,7 @@ class CourseEdit extends Component {
                           this.setState({ filterData: false })
                         }
                         else {
-                          this.handleSelectChange(entity)
+                          this.handleSelectChange(entity,true)
                         }
                       }}
                     />

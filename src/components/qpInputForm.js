@@ -29,7 +29,7 @@ const InputForm = () => {
     });
     useEffect(() => {
         axios
-            .post(`http://localhost:5000/api/putqp/`, {qp_info:qpInfo,qp_details:qpData,id:qpId})
+            .post(`http://localhost:5000/api/putqp/`, {qp_info:{},qp_details:{},id:qpId})
             .then((res) => {
                 console.log(res);
             })

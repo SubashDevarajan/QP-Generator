@@ -6,17 +6,23 @@ import MediaCard from "./QuestionCard";
 
 
 
-function Mainbody() {
+function Mainbody(props) {
   const [qp, setQp] = useState([]);
+  
+
   useEffect(() => {
+    console.log()
+    
+  },[]);
+  getAll=()=>{
     axios
-      .get(`http://localhost:5000/api/qp/${localStorage.getItem("UserId")}}`)
+      .get(`http://localhost:5000/api/qp/${localStorage.getItem("UserId")}`)
       .then((res) => {
         setQp(res.data.rows);
         console.log(res.data.rows);
       })
       .catch((e) => console.log(e.response));
-  },[]);
+  }
   return (
     <div className="mainbody">
       <hr></hr>
@@ -29,8 +35,6 @@ function Mainbody() {
           }
           )
         }
-        <MediaCard />
-        <MediaCard />
       </div>
     </div>
   );
