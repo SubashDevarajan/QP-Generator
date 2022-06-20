@@ -261,37 +261,7 @@ const QPInputPanel = () => {
       </div>
 
 
-      <Modal
-        open={openBl}
-        onClose={handleCloseBl}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <div class="mb-5">
-            {/* <Demo isHeader={true} header={"Bloom Taxonomy Standard"} /> */}
-            <Progress />
-
-          </div>
-          {/* <div class="mt-5">
-            <Demo isHeader={true} header={"Current Bloom Taxonomy Allocation"} />
-
-          </div> */}
-        </Box>
-      </Modal>
-      <Modal
-        // open={openPrev}
-        // onClose={handleClosePrev}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <div class="mb-5">
-            <Preview />
-
-          </div>
-        </Box>
-      </Modal>
+      
     </div>
   );
 };

@@ -36,12 +36,12 @@ const Progress = () => {
     }
 
     var currentBlValues = {
-        lower: (currentBlMarks["BL1"] || 0) + (currentBlMarks["BL2"] || 0),
-        intermediate: (currentBlMarks["BL3"] || 0) + (currentBlMarks["BL4"] || 0),
-        higher: (currentBlMarks["BL5"] || 0) + (currentBlMarks["BL6"] || 0)
+        lower: (currentBlMarks["L1"] || 0) + (currentBlMarks["L2"] || 0),
+        intermediate: (currentBlMarks["L3"] || 0) + (currentBlMarks["L4"] || 0),
+        higher: (currentBlMarks["L5"] || 0) + (currentBlMarks["L6"] || 0)
     }
 
-    // console.log(currentBlValues)
+    // console.log(currentBlValues) 
 
     var colorValues = {
         lower: "danger",

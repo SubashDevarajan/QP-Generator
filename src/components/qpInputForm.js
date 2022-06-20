@@ -21,7 +21,7 @@ const InputForm = () => {
     const [co, setCo] = useState([]);
     var userId = localStorage.getItem("UserId");
     var qpId = localStorage.getItem("QpId");
-    console.log(qpId)
+    // console.log(qpId)
     const [qData, setQData] = useState({
         user_id: userId,
         qp_info: {},
@@ -42,12 +42,12 @@ const InputForm = () => {
 
     useEffect(() => {
         axios
-            .put(`http://localhost:5000/api/putqp/`, {qp_info:qpInfo,qp_details:qpData,id:qpId})
+            .put(`http://localhost:5000/api/putqp/`, { qp_info: qpInfo, qp_details: qpData, id: qpId })
             .then((res) => {
-                console.log(res);
+                // console.log(res);
             })
             .catch((e) => console.log(e.response));
-    }, [qpData,qpInfo]);
+    }, [qpData, qpInfo]);
 
     const handleSubDiv = (event, sd) => {
         if (!sd)
@@ -66,13 +66,14 @@ const InputForm = () => {
     const courseCode = qpInfo["subjectCodeTitle"].split(" ")[0];
     // console.log(courseCode)
     useEffect(() => {
+        // console.log(qpInfo["subjectCodeTitle"].split(" ")[0])
         axios
             .get(`http://localhost:5000/api/courseoutcome/${qpInfo["subjectCodeTitle"].split(" ")[0]}`)
             .then((res) => {
                 setCo(res.data.rows);
                 // console.log(res.data.rows);
             })
-            .catch((e) => console.log(e));
+            // .catch((e) => console.log(e));
     }, [qpInfo]);
 
 
@@ -219,11 +220,13 @@ const InputForm = () => {
                         ["i"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"],
                             [e.name]: v.value,
+                            question:qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"]["question"],
                             state: state
                         },
                         ["ii"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"],
                             [e.name]: v.value,
+                            question:qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["ii"]["question"],
                             state: state,
                             marks: qpData[current["section"]][currentQuestion]["ii"]["marks"]
                         }
@@ -233,11 +236,13 @@ const InputForm = () => {
                         ["i"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"],
                             [e.name]: v.value,
+                            question:qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"]["question"],
                             state: state
                         },
                         ["ii"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"],
                             [e.name]: v.value,
+                            question:qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["ii"]["question"],
                             state: state,
                             marks: qpData[current["section"]][currentQuestion]["ii"]["marks"]
                         }
@@ -269,7 +274,9 @@ const InputForm = () => {
 
     function handleReset() {
         // console.log(current["section"] == "B")
-        if (current["section"] == "B")
+        if (current["section"] == "B") {
+            console.log(currentQuestion.substring(4,5)+current["subDiv"]=="bi")
+            var curQnSd = currentQuestion.substring(4,5)+current["subDiv"];
             setQPData({
                 ...qpData,
                 [current["section"]]: {
@@ -278,7 +285,7 @@ const InputForm = () => {
                         ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"],
                         ["i"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"],
-                            question: "",
+                            question: curQnSd=="ai"?"":qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["i"]["question"],
                             blVerb: "",
                             blLevel: "",
                             courseOutcome: "",
@@ -286,7 +293,7 @@ const InputForm = () => {
                         },
                         ["ii"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["ii"],
-                            question: "",
+                            question: curQnSd=="aii"?"":qpData[current["section"]][currentQuestion.substring(0, 2) + " (a)"]["ii"]["question"],
                             blVerb: "",
                             blLevel: "",
                             courseOutcome: "",
@@ -297,7 +304,7 @@ const InputForm = () => {
                         ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"],
                         ["i"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"],
-                            question: "",
+                            question: curQnSd=="bi"?"":qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["i"]["question"],
                             blVerb: "",
                             blLevel: "",
                             courseOutcome: "",
@@ -305,7 +312,7 @@ const InputForm = () => {
                         },
                         ["ii"]: {
                             ...qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["ii"],
-                            question: "",
+                            question: curQnSd=="bii"?"":qpData[current["section"]][currentQuestion.substring(0, 2) + " (b)"]["ii"]["question"],
                             blVerb: "",
                             blLevel: "",
                             courseOutcome: "",
@@ -314,6 +321,8 @@ const InputForm = () => {
                     }
                 }
             })
+        }
+
         else
             setQPData({
                 ...qpData,
@@ -342,6 +351,33 @@ const InputForm = () => {
             });
     }
 
+    function handleBlVerbSelectChange(v, e) {
+        var curQues = qpData[current["section"]][currentQuestion][current["subDiv"]];
+        var arr = ["blLevel", "blVerb", "courseOutcome", "question"]
+        var state = 2;
+        for (let j in arr) {
+            if (curQues[arr[j]] == "") {
+                if (arr[j] != e.name) {
+                    state = 1;
+                    break;
+                }
+            }
+        }
+        setQPData({
+            ...qpData,
+            [current["section"]]: {
+                ...qpData[current["section"]],
+                [currentQuestion]: {
+                    ...qpData[current["section"]][currentQuestion],
+                    [current["subDiv"]]: {
+                        ...qpData[current["section"]][currentQuestion][current["subDiv"]],
+                        [e.name]: v.value,
+                        state: state
+                    }
+                }
+            }
+        });
+    }
 
     function handleQuestionChange(e) {
         var targetName = "question"
@@ -457,6 +493,7 @@ const InputForm = () => {
                     <Select
                         name='courseOutcome'
                         // isMulti
+                        alignItems='left'
                         isSearchable
                         options={COList}
                         onChange={handleSelectChange}
@@ -484,7 +521,7 @@ const InputForm = () => {
                         // isMulti
                         isSearchable
                         options={BLVerbList}
-                        onChange={handleSelectChange}
+                        onChange={handleBlVerbSelectChange}
                         value={BLVerbList.filter(option =>
                             option.value === qpData[current['section']][currentQuestion][current["subDiv"]]["blVerb"])}
                     />

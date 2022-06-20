@@ -8,16 +8,16 @@ const ComponentToPrint = React.forwardRef((props, ref) => (
       </div>
 ));
 
-const Examplee = () => {
-    const componentRef = useRef();
-    return (
-      <div>
-        <ReactToPrint
-          trigger={() => <a href="#">Print this out!</a>}
-          content={() => componentRef.current}
-        />  
-      </div>
-    );
-}
+// const Examplee = () => {
+//     const componentRef = useRef();
+//     return (
+//       <div>
+//         <ReactToPrint
+//           trigger={() => <a href="#">Print this out!</a>}
+//           content={() => componentRef.current}
+//         />  
+//       </div>
+//     );
+// }
 
 export default ComponentToPrint;

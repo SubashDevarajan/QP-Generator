@@ -42,7 +42,7 @@ class CourseEdit extends Component {
         cell: (row) => <div>{row?.coursecode}</div>,
       },
       {
-        name: "Course Details",
+        name: "Course Name",
         selector: "coursename",
         sortable: true,
         cell: (row) => <div>{row?.coursename}</div>,
@@ -83,7 +83,7 @@ class CourseEdit extends Component {
     this.getData();
   }
 
-  handleSelectChange = (v,t) => {
+  handleSelectChange = (v, t) => {
     let a = this.state.Data.filter(x => v?.value === x.coursecode);
     this.setState({ filteredData: a, filterData: t })
   }
@@ -136,11 +136,11 @@ class CourseEdit extends Component {
             .delete(`http://localhost:5000/api/coursedelete/${a}`)
             .then((res) => {
               this.getData();
-              this.handleSelectChange("",false);
+              this.handleSelectChange("", false);
               this.successalt("success", "SuccessFully Deleted");
             })
             .catch((e) => console.log(e.response));
-          
+
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
@@ -172,7 +172,7 @@ class CourseEdit extends Component {
       .then((res) => {
         this.successalt("success", "Successfully updated");
         this.getData();
-        this.handleSelectChange("",false);
+        this.handleSelectChange("", false);
       })
       .catch((e) => console.log(e.response));
     this.toggleManageModal();
@@ -180,13 +180,13 @@ class CourseEdit extends Component {
 
   handleAddSubmit = (values) => {
     // try {
-      axios
+    axios
       .post(`http://localhost:5000/api/coursepost/`, values)
       .then((res) => {
         this.successalt("success", "Successfully added");
         this.getData();
       })
-      // .catch((e) => console.log(e.response));
+    // .catch((e) => console.log(e.response));
     // } catch (error) {
     //   alert("Course with this course code already exists");
     // }
@@ -255,7 +255,7 @@ class CourseEdit extends Component {
                           this.setState({ filterData: false })
                         }
                         else {
-                          this.handleSelectChange(entity,true)
+                          this.handleSelectChange(entity, true)
                         }
                       }}
                     />
@@ -311,7 +311,7 @@ class CourseEdit extends Component {
                             className="form-control"
                             name="coursecode"
                             type="text"
-                          // disabled={true}
+                            disabled={true}
                           />
                         </FormGroup>
                       </Col>

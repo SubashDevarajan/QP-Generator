@@ -134,7 +134,7 @@ const ResponsiveAppBar = (props) => {
                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                 variant="dot"
               >
-                <Avatar alt="Jackson Durai" src="/static/images/avatar/1.jpg" />
+                <Avatar src="/static/images/avatar/1.jpg" />
               </StyledBadge>
             </IconButton>
           </form>

@@ -26,7 +26,7 @@ const ProgressCo = () => {
         }
     }
 
-    console.log(currentCoMarks)
+    // console.log(currentCoMarks)
 
     const coStandards =
     {
